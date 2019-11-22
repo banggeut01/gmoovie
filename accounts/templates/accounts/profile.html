@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+  <h1>{{ account.username }}님의 프로필
+    {% if user != account %}
+    {% with account.followers.all as followers %}
+    <a href="{% url 'accounts:follow' account.pk %}">
+      {% if user in followers %}
+      팔로우 취소
+      {% else %}
+      팔로우
+      {% endif %}
+    </a>
+    {% endwith %}
+    {% endif %}
+  </h1><br>
+  <h2>작성한 평점</h2>
+  {% for review in account.review_set.all %}
+  <p>내용 : {{ review.content }}, 평점: {{ review.score }}</p>
+  {% empty %}
+  <h1>평점 정보가 없습니다.</h1>
+  {% endfor %}
+  <hr>
+  <h2>좋아하는 영화</h2>
+  {% for movie in accounts.like_movies.all %}
+  <h3>
+    {{ movie.title }}
+  </h3>
+  {% empty %}
+  <h1>좋아하는 영화가 없습니다.</h1>
+  {% endfor %}
+  <hr>
+  <h4>팔로워 <b>{{ account.followers.all.count }}</b> 팔로우 <b>{{ account.followings.all.count }}</b> </h4>
+</div>
+{% endblock %}
