@@ -1,0 +1,6 @@
+body {
+  background-size:100%;
+  background-image: url('/static/movies/images/bg-image.jpg');
+  background-attachment: fixed;  
+  
+}

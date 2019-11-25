@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User
-from .forms import CustomUserCreationForm
+from .forms import CustomUserForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -13,22 +13,37 @@ def index(request):
     }
     return render(request, 'accounts/index.html', context)
 
-def detail(request, account_pk):
-    account = get_object_or_404(User, id=account_pk)
+def update(request):
+    if request.method == 'POST':
+        # 1. 사용자가 보낸 내용 담아서
+        form = CustomUserForm(request.POST, instance=request.user)
+        # 2. 검증
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+        # 3. 반영
+    else:
+        form = CustomUserForm(instance=request.user)
     context = {
-        'account': account
+        'form': form
     }
-    return render(request, 'accounts/profile.html', context)
+    return render(request, 'accounts/form.html', context)
+# def detail(request, account_pk):
+#     account = get_object_or_404(User, id=account_pk)
+#     context = {
+#         'account': account
+#     }
+#     return render(request, 'accounts/profile.html', context)
 
 def signup(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
             return redirect('movies:index')
     else:
-        form = CustomUserCreationForm()
+        form = CustomUserForm()
     context = {
         'form': form
     }
@@ -48,14 +63,14 @@ def login(request):
     }
     return render(request, 'accounts/login.html', context)
 
-def logout(request):
-    auth_logout(request)
-    return redirect('movies:index')
+# def logout(request):
+#     auth_logout(request)
+#     return redirect('movies:index')
 
-def follow(request, account_pk):
-    user_profile = get_object_or_404(get_user_model(), pk=account_pk)
-    if request.user in user_profile.followers.all(): 
-        user_profile.followers.remove(request.user)
-    else:
-        user_profile.followers.add(request.user)
-    return redirect('accounts:detail', account_pk)
+# def follow(request, account_pk):
+#     user_profile = get_object_or_404(get_user_model(), pk=account_pk)
+#     if request.user in user_profile.followers.all(): 
+#         user_profile.followers.remove(request.user)
+#     else:
+#         user_profile.followers.add(request.user)
+#     return redirect('accounts:detail', account_pk)

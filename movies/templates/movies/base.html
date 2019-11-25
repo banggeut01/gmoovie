@@ -9,6 +9,8 @@
   <title>SW | 같이 영화 볼래요?</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'movies/css/base_style.css' %}">
+  <script src="https://kit.fontawesome.com/93f188e0ea.js" crossorigin="anonymous"></script>
   <style>
     .container-fluid {
       height: 100%;
@@ -37,6 +39,10 @@
       color: rgba(230, 230, 230, 0.9);
       list-style: none;
       padding: 15px 10px;
+      
+    }
+
+    #sidebar ul {
       border-bottom: 1px solid rgba(100, 100, 100, 0.3);
     }
 
@@ -57,14 +63,6 @@
     .navbar {
       background: #151719;
     }
-
-    body {
-      height: 100%;
-      background-image: url('..images/bg-image.jpg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
   </style>
 </head>
 
@@ -80,8 +78,10 @@
       <button style="background-color: red; color: white;">로고</button>
       ....SHELL WE?
       <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" type="search" placeholder="영화 검색하기" aria-label="Search">
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
       </form>
     </div>
     <div class="NavBar-right">
@@ -90,16 +90,28 @@
       </button>
     </div>
   </nav>
-  <div class="container" id="body-content">
+  <div class="container">
     <div id="sidebar">
       <!-- <div class="toggle-btn" onclick="toggleSidebar()">  -->
 
       <!-- </div> -->
       <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
+        <li>
+            <i class="fas fa-home"> Home</i> 
+        </li>
+        <li>
+            <i class="fas fa-thumbs-up"> 좋아요</i> 
+        </li>
+        <li>
+          <i class="fas fa-heart"> 같이 볼래요</i>
+        </li>
       </ul>
+      <ul>
+          <li>
+              팔로잉
+          </li>
+          <!-- <li for 문></li> -->
+        </ul>
     </div>
   </div>
   {% block body %}
