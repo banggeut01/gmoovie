@@ -39,9 +39,12 @@
       color: rgba(230, 230, 230, 0.9);
       list-style: none;
       padding: 15px 10px;
-      
     }
 
+    #sidebar ul li.able:hover {
+      background-color: rgb(107, 107, 107);
+      cursor: pointer;
+    }
     #sidebar ul {
       border-bottom: 1px solid rgba(100, 100, 100, 0.3);
     }
@@ -62,6 +65,11 @@
 
     .navbar {
       background: #151719;
+    }
+
+    #sidebar ul li img {
+      width: 30px;
+      border-radius: 30px;
     }
   </style>
 </head>
@@ -96,22 +104,48 @@
 
       <!-- </div> -->
       <ul>
-        <li>
-            <i class="fas fa-home"> Home</i> 
+        <a href="#">
+        <li class="able">
+          <i class="fas fa-home"> Home</i>
+        </li></a>
+        <li class="able">
+          <i class="fas fa-thumbs-up"> 좋아요</i>
         </li>
-        <li>
-            <i class="fas fa-thumbs-up"> 좋아요</i> 
-        </li>
-        <li>
+        <li class="able">
           <i class="fas fa-heart"> 같이 볼래요</i>
         </li>
       </ul>
       <ul>
-          <li>
-              팔로잉
-          </li>
-          <!-- <li for 문></li> -->
-        </ul>
+        <li>
+          팔로잉
+        </li>
+        <!-- <li for 문></li> -->
+        <li class="able">
+          <img src="/static/movies/images/무무.jpg" alt=""> 무무비
+        </li>
+        <li class="able">
+          <img src="/static/movies/images/지니.png" alt=""> 지니무비
+        </li>
+        <li class="able">
+          <img src="/static/movies/images/무무.jpg" alt=""> 무무비
+        </li>
+        <li class="able">
+          <img src="/static/movies/images/지니.png" alt=""> 지니무비
+        </li>
+        <li class="able">
+          <img src="/static/movies/images/무무.jpg" alt=""> 무무비
+        </li>
+        <li class="able">
+          <img src="/static/movies/images/지니.png" alt=""> 지니무비
+        </li>
+        <li class="able">
+            <i class="fas fa-chevron-down"> # 개 더보기</i>
+        </li>
+      </ul>
+      <ul>
+        <li>더보기<i class="fas fa-chevron-right"></i></li>
+      </ul>
+         @copyright
     </div>
   </div>
   {% block body %}
