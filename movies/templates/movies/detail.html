@@ -1,45 +1,26 @@
-{% extends './base.html' %}
+{% extends 'movies/base.html' %}
 {% block body %}
-<img src="{{movie.poster_url}}" class='my-image'alt="">
-<h1>{{movie.title}} 
-
-</h1>
-<h3>관객수 : {{movie.audience}} 장르 : {{movie.genre.name}}
-</h3>
-<h3>좋아요 : {{movie.like_users.all.count}} 
-<form action="{% url 'movies:like' movie.pk %}" method='POST'>
-{% csrf_token %}
-{% if user in movie.like_users.all %}
-<input type="submit" name="" value='싫어~!'>
-{% else %}
-<input type="submit" name="" value='좋아~!'>
-{% endif %}
-</form>
-</h3>
-<p>{{movie.description}}</p>
+<h1>{{ movie.title }}</h1>
+<img src="{{ movie.backdrop_path }}" alt="" style="width:25%">
+<p>{{ movie.title_en }}, {{ movie.open_date }}</p>
 <hr>
-<p>
-{% if user.is_authenticated %}
-<p>리뷰 부탁 드립니다.</p>
-<form action="{% url 'movies:new' movie.pk %}" method='POST'>
-{% csrf_token %}
-{{review_form}}
-<input type="submit" value="등록">
-</form>
-{% else %}
-<p>리뷰 및 평점을 남기기 위해 로그인 해주세요</p>
-{% endif %}
-</p>
+<h3>평점 <b>{{ movie.score }}</b></h3>
+<p>개요 <b>{{ movie.genre }}</b></p>
+<p>등급 <b>{{ movie.watch_grade }}</b></p>
+<p>흥행 누적관객 <b>{{ movie.audience }}</b></p>
 <hr>
+<h2>줄거리</h2>
+<p>{{ movie.description }}</p>
+<button><a href="{% url 'movies:index' %}" style="text-decoration: none;">목록</a></button>
+<hr>
+<form action="{% url 'movies:new' movie.pk %}" method="POST">
+  {% csrf_token %}
+  {{ review_form.as_p}}
+  <input type="submit" value="댓글 작성">
+</form>
 {% for review in movie.review_set.all %}
-<p>{{review.user}} => 평점 : {{review.score}} 리뷰 : {{review.content}}
-{% if user == review.user %}
- <form action="{% url 'movies:delete' movie.pk review.pk %}" method='POST'>
- {% csrf_token %}
- <input type="submit" value='리뷰 삭제'>
- </form>
- {% endif %}
- </p>
- <hr>
+<p><b>{{ review.score }}</b> "{{ review.content }}"</p>
+{% empty %}
+<p>작성된 댓글이 없습니다.</p>
 {% endfor %}
 {% endblock %}
