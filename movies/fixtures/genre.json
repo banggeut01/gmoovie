@@ -1,79 +1,135 @@
 [
-    {
-        "pk": 1,
-        "model": "movies.genre",
-        "fields": {
-            "name": "가족"
-        }
-    },
-    {
-        "pk": 2,
-        "model": "movies.genre",
-        "fields": {
-            "name": "공포(호러)"
-        }
-    },
-    {
-        "pk": 3,
-        "model": "movies.genre",
-        "fields": {
-            "name": "드라마"
-        }
-    },
-    {
-        "pk": 4,
-        "model": "movies.genre",
-        "fields": {
-            "name": "멜로/로맨스"
-        }
-    },
-    {
-        "pk": 5,
-        "model": "movies.genre",
-        "fields": {
-            "name": "미스터리"
-        }
-    },
-    {
-        "pk": 6,
-        "model": "movies.genre",
-        "fields": {
-            "name": "사극"
-        }
-    },
-    {
-        "pk": 7,
-        "model": "movies.genre",
-        "fields": {
-            "name": "스릴러"
-        }
-    },
-    {
-        "pk": 8,
-        "model": "movies.genre",
-        "fields": {
-            "name": "액션"
-        }
-    },
-    {
-        "pk": 9,
-        "model": "movies.genre",
-        "fields": {
-            "name": "어드벤처"
-        }
-    },
-    {
-        "pk": 10,
-        "model": "movies.genre",
-        "fields": {
-            "name": "판타지"
-        }
-    },
-    {
-        "pk": 11,
-        "model": "movies.genre",
-        "fields": {
-            "name": "코미디"
-        }
-    }
+	{
+		"pk": 28,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uc561\uc158"
+		}
+	},
+	{
+		"pk": 12,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ubaa8\ud5d8"
+		}
+	},
+	{
+		"pk": 16,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uc560\ub2c8\uba54\uc774\uc158"
+		}
+	},
+	{
+		"pk": 35,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ucf54\ubbf8\ub514"
+		}
+	},
+	{
+		"pk": 80,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ubc94\uc8c4"
+		}
+	},
+	{
+		"pk": 99,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ub2e4\ud050\uba58\ud130\ub9ac"
+		}
+	},
+	{
+		"pk": 18,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ub4dc\ub77c\ub9c8"
+		}
+	},
+	{
+		"pk": 10751,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uac00\uc871"
+		}
+	},
+	{
+		"pk": 14,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ud310\ud0c0\uc9c0"
+		}
+	},
+	{
+		"pk": 36,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uc5ed\uc0ac"
+		}
+	},
+	{
+		"pk": 27,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uacf5\ud3ec"
+		}
+	},
+	{
+		"pk": 10402,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uc74c\uc545"
+		}
+	},
+	{
+		"pk": 9648,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ubbf8\uc2a4\ud130\ub9ac"
+		}
+	},
+	{
+		"pk": 10749,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\ub85c\ub9e8\uc2a4"
+		}
+	},
+	{
+		"pk": 878,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "SF"
+		}
+	},
+	{
+		"pk": 10770,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "TV \uc601\ud654"
+		}
+	},
+	{
+		"pk": 53,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uc2a4\ub9b4\ub7ec"
+		}
+	},
+	{
+		"pk": 10752,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uc804\uc7c1"
+		}
+	},
+	{
+		"pk": 37,
+		"model": "movies.Genre",
+		"fields": {
+			"name": "\uc11c\ubd80"
+		}
+	}
 ]

@@ -4,10 +4,28 @@ from django.views.decorators.http import require_POST
 from .forms import ReviewForm
 from .models import Movie,Review
 # Create your views here.
+# def index(request):
+#     if request.user.is_authenticated:
+#         movies = Movie.objects.all()
+#         context = {
+#             'movies' : movies
+#         }
+#         return render(request,'movies/index.html',context)
+#     else:
+#         return redirect('accounts:login')
 def index(request):
     movies = Movie.objects.all()
+    nowplaying = []
+    upcoming = []
+    for movie in movies:
+        if int(movie.category) & 2: # 현재 상영중
+            nowplaying.append(movie)
+        if int(movie.category) & 1: # 개봉 예정
+            upcoming.append(movie)
     context = {
-        'movies' : movies
+        'movies' : movies,
+        'nowplaying': nowplaying,
+        'upcoming': upcoming
     }
     return render(request,'movies/index.html',context)
 

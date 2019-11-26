@@ -1,8 +1,85 @@
-{% extends 'base.html' %}
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylepart %}
+<style>
+  #head {
+    height: 200px;
+  }
+
+  #welcomediv {
+    background-color: #151719;
+    opacity: 0.9;
+    min-width: 500px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: whitesmoke;
+    text-align: center;
+  }
+
+  #formdiv {
+    background-color: rgb(56, 56, 56);
+    opacity: 0.9;
+    min-width: 500px;
+
+  }
+
+  #formdiv>form>p>label {
+    display: none;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  #formdiv>form {
+    margin-top: 20px;
+  }
+
+  #formdiv > form > ul > li {
+    color: whitesmoke;
+  }
+  }
+</style>
+{% endblock %}
+
 {% block body %}
-<form action="" method="POST">
-  {% csrf_token %}
-  {{form.as_p}}
-  <input type="submit" value="로그인">
-</form>
+<div class="container" style="height:100%;">
+  <div id="head"></div>
+</div>
+</div>
+<div class="row">
+  <img class="mx-auto mb-3" src="/static/movies/images/로고0.png" alt="로고" style="width:400px;">
+</div>
+<div class="row">
+  <div class="col-4"></div>
+  <div id="welcomediv" class="col-4">
+    <h3>SW Web</h3>
+    <h6>would like to sign in to your SW account</h6>
+  </div>
+  <div class="col-4"></div>
+</div>
+<div class="row">
+  <div class="col-4"></div>
+  <div id="formdiv" class="col-4">
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="btn btn-secondary" type="submit" value="로그인">
+    </form>
+    <a href="{% url 'accounts:signup' %}">
+      <button type="button" class="btn btn-secondary">
+        회원가입
+      </button>
+    </a>
+
+  </div>
+  <div class="col-4"></div>
+</div>
+</div>
 {% endblock %}

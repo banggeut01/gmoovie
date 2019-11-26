@@ -1,8 +1,75 @@
-{% extends 'base.html' %}
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block stylepart %}
+<style>
+  #head {
+    height: 10px;
+  }
+
+  #welcomediv {
+    background-color: #151719;
+    opacity: 0.9;
+    min-width: 500px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: whitesmoke;
+    text-align: center;
+  }
+
+  #formdiv {
+    background-color: rgb(56, 56, 56);
+    opacity: 0.9;
+    min-width: 500px;
+
+  }
+
+  #formdiv>form>p,
+  #formdiv>form>ul,
+  #formdiv span,
+  #formdiv strong {
+    color: whitesmoke;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  #formdiv>form {
+    margin-top: 20px;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
-<form action="" method="POST">
-  {% csrf_token %}
-  {{form.as_p}}
-  <input type="submit" value="회원가입">
-</form>
+<div class="container" style="height:100%;">
+  <div id="head"></div>
+</div>
+</div>
+<div class="row">
+  <div class="col-4"></div>
+  <div id="welcomediv" class="col-4">
+    {% if user.is_authenticated %}
+    <h3>회원정보 수정</h3>
+    {% else %}
+    <h3>회원가입 양식</h3>
+    {% endif %}
+  </div>
+  <div class="col-4"></div>
+</div>
+<div class="row">
+  <div class="col-4"></div>
+  <div id="formdiv" class="col-4">
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      {% if user.is_authenticated %}
+      <input class="btn btn-secondary" type="submit" value="수정">
+      {% else %}
+      <input class="btn btn-secondary" type="submit" value="회원가입">
+      {% endif %}
+    </form>
+  </div>
+  <div class="col-4"></div>
+</div>
+</div>
 {% endblock %}

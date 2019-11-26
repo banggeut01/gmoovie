@@ -1,6 +1,246 @@
 {% extends './base.html' %}
+{% block style %}
+<style>
+  #demo {
+    position: absolute;
+  }
+
+  #demo1 {
+    position: absolute;
+    top: 500px;
+  }
+
+  h2 {
+    color: white;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  .carousel-item {
+    width: 100%;
+  }
+
+  .movieTitle {
+    font-size: 1.2vw;
+    color: white;
+  }
+
+  .carousel-control-prev {
+    position: absolute;
+    width: 80px;
+  }
+
+  .carousel-control-next {
+    position: absolute;
+    width: 80px;
+  }
+
+  .col-3 img {
+    padding: 0;
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
-{% for movie in movies %}
-<a href="{% url 'movies:detail' movie.pk %}"><img src="{{movie.poster_url}}" class='my-image' alt=""></a>
-{% endfor %}
+<div id="demo" class="carousel slide" data-ride="carousel">
+  <h2>평점순 영화 목록</h2>
+  <!-- The slideshow -->
+  <div class="carousel-inner no-padding mx-0">
+    <a class="carousel-control-prev" href="#demo" data-slide="prev"
+      style="background: linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%, rgba(255,255,255,0.2) 100%);">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <div class="carousel-item active">
+      <div class="row">
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.0.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.0.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.0.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.1.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.1.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.1.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.2.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.2.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.2.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.3.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.3.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.3.title}}</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="row">
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.4.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.4.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.4.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.5.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.5.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.5.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.6.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.6.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.6.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.7.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.7.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.7.title}}</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row carousel-item">
+      <div class="row" style="width:100%;">
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.8.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.8.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.8.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.9.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.9.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.9.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.10.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.10.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.10.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' movies.11.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{movies.11.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{movies.11.title}}</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-next no-padding" href="#demo" data-slide="next"
+      style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 100%, rgba(255,255,255,0.2) 100%);">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+  <!-- Left and right controls -->
+</div>
+<div id="demo1" class="carousel slide" data-ride="carousel">
+  <h2>현재 상영작</h2>
+  <!-- The slideshow -->
+  <div class="carousel-inner no-padding">
+    <a class="carousel-control-prev no-padding" href="#demo1" data-slide="prev"
+      style="background: linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%, rgba(255,255,255,0.2) 100%);">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <div class="carousel-item active">
+      <div class="row">
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.0.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.0.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.0.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.1.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.1.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.1.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.2.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.2.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.2.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.3.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.3.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.3.title}}</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="row">
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.4.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.4.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.4.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.5.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.5.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.5.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.6.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.6.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.6.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.7.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.7.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.7.title}}</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row carousel-item">
+      <div class="row">
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.8.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.8.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.8.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.9.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.9.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.9.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.10.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.10.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.10.title}}</h5>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="{% url 'movies:detail' nowplaying.11.pk %}"><img
+              src="https://image.tmdb.org/t/p/w500/{{nowplaying.11.backdrop_path}}" class='my-image' alt=""><br>
+            <h5 class="movieTitle">{{nowplaying.11.title}}</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-next no-padding" href="#demo1" data-slide="next"
+      style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 100%, rgba(255,255,255,0.2) 100%);">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+  <!-- Left and right controls -->
+</div>
 {% endblock %}
