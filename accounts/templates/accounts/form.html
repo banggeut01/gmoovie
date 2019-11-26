@@ -59,7 +59,7 @@
 <div class="row">
   <div class="col-4"></div>
   <div id="formdiv" class="col-4">
-    <form action="" method="POST">
+    <form action="" method="POST" enctype='multipart/form-data'>
       {% csrf_token %}
       {{ form.as_p }}
       {% if user.is_authenticated %}

@@ -14,21 +14,24 @@ from .models import Movie,Review
 #     else:
 #         return redirect('accounts:login')
 def index(request):
-    movies = Movie.objects.all()
-    nowplaying = []
-    upcoming = []
-    for movie in movies:
-        if int(movie.category) & 2: # 현재 상영중
-            nowplaying.append(movie)
-        if int(movie.category) & 1: # 개봉 예정
-            upcoming.append(movie)
-    context = {
-        'movies' : movies,
-        'nowplaying': nowplaying,
-        'upcoming': upcoming
-    }
-    return render(request,'movies/index.html',context)
-
+    if request.user.is_authenticated:
+        movies = Movie.objects.all()
+        nowplaying = []
+        upcoming = []
+        for movie in movies:
+            if int(movie.category) & 2: # 현재 상영중
+                nowplaying.append(movie)
+            if int(movie.category) & 1: # 개봉 예정
+                upcoming.append(movie)
+        context = {
+            'movies' : movies,
+            'nowplaying': nowplaying,
+            'upcoming': upcoming
+        }
+        return render(request,'movies/index.html',context)
+    else:
+        return redirect('accounts:login')
+        
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     review_form = ReviewForm()
