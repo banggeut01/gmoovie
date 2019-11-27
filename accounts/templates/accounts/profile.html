@@ -1,5 +1,23 @@
-{% extends 'movies/base.html' %}
+{% extends 'movies/base2.html' %}
+{% block style %}
+<style>
+  #profileContainer {
+    margin: 100px 400px 0px 400px;
+    box-shadow: 5px 5px 5px #111111;
+    padding: 30px;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
+<div id="profileContainer" class="bg-light">
+<table class="profileTable">
+  <tr class="info">
+
+  </tr>
+  <tr class="likeMovie"></tr>
+</table>
+</div>
 <div class="container">
   <h1>{{ account.username }}님의 프로필
     {% if user != account %}

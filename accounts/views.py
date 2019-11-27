@@ -25,12 +25,13 @@ def update(request):
         'form': form
     }
     return render(request, 'accounts/form.html', context)
-# def detail(request, account_pk):
-#     account = get_object_or_404(User, id=account_pk)
-#     context = {
-#         'account': account
-#     }
-#     return render(request, 'accounts/profile.html', context)
+
+def detail(request, account_pk):
+    account = get_object_or_404(User, id=account_pk)
+    context = {
+        'account': account
+    }
+    return render(request, 'accounts/profile.html', context)
 
 def signup(request):
     if request.method == 'POST':

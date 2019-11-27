@@ -55,7 +55,7 @@ def detail(request,movie_pk):
     return render(request,'movies/detail.html',context)
 
 @require_POST
-def new(request,movie_pk):
+def review_create(request,movie_pk):
     if request.user.is_authenticated:
         movie = get_object_or_404(Movie,pk=movie_pk)
         review_form = ReviewForm(request.POST)

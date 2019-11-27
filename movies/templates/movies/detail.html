@@ -8,22 +8,22 @@
     padding-bottom: 50px;
   }
 
-  table img {
+  .table img {
     width: 300px;
     height: 450px;
   }
 
-  table h1 {
+  .table h1 {
     color: white;
     display: inline;
   }
 
-  table h3 {
+  .table h3 {
     color: gray;
     display: inline;
   }
 
-  table p {
+  .table p {
     color: white;
   }
 
@@ -43,6 +43,48 @@
     object-fit: cover;
     border-radius: 50%;
   }
+
+  #reviewSection {
+    margin: 100px 100px;
+    box-shadow: 5px 5px 5px #111111;
+    padding: 30px;
+  }
+
+  #reviewSection img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 50px;
+  }
+
+  #reviewSection i {
+    width: 50px;
+    height: 50px;
+    color: #111133;
+  }
+
+  #reviewForm label {
+    display: none;
+  }
+
+  #reviewForm p,
+  #reviewForm input {
+
+    display: inline;
+  }
+
+  #reviewForm #id_content {
+    width: 1000px;
+  }
+
+  #reviewForm p {
+    color: #111111;
+  }
+
+  #review tr {
+    border: 20px;
+  }
 </style>
 {% endblock %}
 
@@ -52,10 +94,10 @@
   background-size: 100%;
   ">
   <div class="container row mx-auto">
-    <table>
+    <table class="table">
       <tr>
         <td>
-          <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="">
+          <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="{{ movie.title }} 포스터 이미지">
         </td>
         <td style="width:50px;">
 
@@ -70,7 +112,31 @@
           {% if is_now or is_up %}
           <a href="" title="같이 볼래요"><i class="fas fa-heart fa-3x"></i></a>
           {% endif %}
-          <a href="" title="광고 보러가기"><i class="far fa-play-circle fa-3x"></i></a>
+          <!-- trigger modal -->
+          <a href="" title="광고 보러가기" data-toggle="modal" data-target="#videoModal"><i
+              class="far fa-play-circle fa-3x"></i></a>
+          <!-- Modal -->
+          <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content" style="width:700px;">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="videoModalLabel">{{ movie.title }} 예고편</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <iframe id="ytplayer" type="text/html" width="100%" height="360"
+                    src="https://www.youtube.com/embed?listType=search&list={{ movie.title }}+예고편"
+                    frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <br>
           <br>
           {% if movie.tagline %}
@@ -92,18 +158,53 @@
         </td>
       </tr>
     </table>
+
+
+
   </div>
 </div>
-<button><a href="{% url 'movies:index' %}" style="text-decoration: none;">목록</a></button>
-<hr>
-<form action="{% url 'movies:new' movie.pk %}" method="POST">
-  {% csrf_token %}
-  {{ review_form.as_p}}
-  <input type="submit" value="댓글 작성">
-</form>
-{% for review in movie.review_set.all %}
-<p><b>{{ review.score }}</b> "{{ review.content }}"</p>
-{% empty %}
-<p>작성된 댓글이 없습니다.</p>
-{% endfor %}
+<!-- Review Section -->
+<div id="reviewSection" class="bg-light">
+  {% if movie.review_set.all %}
+  <p>리뷰 {{ movie.review_set.all.count }}개</p>
+  {% else %}
+  <p>작성된 리뷰가 없습니다. 첫번째 리뷰의 주인공이 되어보세요.</p>
+  {% endif %}
+  <table class="review">
+    <tr>
+      <td>
+        {% if user.image %}
+        <img src="{{ user.image.url }}" alt="{{ user.image.name }}">
+        {% else %}
+        <i class="fas fa-user-circle fa-2x"></i>
+        {% endif %}
+      </td>
+      <td>
+        <form id="reviewForm" action="{% url 'movies:review_create' movie.pk %}" method="POST">
+          {% csrf_token %}
+          {{ review_form.as_p }}
+          <input class="btn btn-dark" type="submit" value="댓글 작성">
+        </form>
+      </td>
+    </tr>
+    <hr>
+    <!-- for문 -->
+    {% for review in movie.review_set.all %}
+    <tr>
+      <td>
+        <a href="{% url 'accounts:detail' review.user_id %}">
+          {% if review.user.image %}
+          <img src="{{ review.user.image.url }}" alt="{{ review.user.image.name }}">
+          {% else %}
+          <i class="fas fa-user-circle fa-2x"></i>
+          {% endif %}
+        </a>
+      </td>
+      <td>
+        <p><b>{{ review.score }}</b> "{{ review.content }}"</p>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 {% endblock %}
