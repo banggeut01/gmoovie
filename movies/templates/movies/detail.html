@@ -108,7 +108,19 @@
             class="btn btn-secondary">상영중</button>{% endif %}
           <p>평점 {{ movie.vote_average }} 상영시간 {{ movie.runtime }}ms</p>
           <br>
-          <a href="" title="좋아요"><i class="fas fa-thumbs-up fa-3x"></i></a>
+          {% if user in movie.like_users.all %}
+          <a href="{% url 'movies:like' movie.id %}">
+            <i id="like-button" data-id="{{ movie.id }}" class="fas fa-thumbs-up fa-3x animated bounce"
+              style="color: red;"></i>
+          </a>
+          <!-- <i id="like-button" data-id="{{ movie.id }}" class="fas fa-thumbs-up fa-3x animated bounce"
+              style="color: red;"></i> -->
+          {% else %}
+          <a href="{% url 'movies:like' movie.id %}">
+            <i id="like-button" data-id="{{ movie.id }}" class="fas fa-thumbs-up fa-3x animated bounce"
+              style="color: rgb(255, 255, 255);"></i>
+          </a>
+          {% endif %}
           {% if is_now or is_up %}
           <a href="" title="같이 볼래요"><i class="fas fa-heart fa-3x"></i></a>
           {% endif %}

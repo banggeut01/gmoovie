@@ -6,48 +6,69 @@
     box-shadow: 5px 5px 5px #111111;
     padding: 30px;
   }
+
+  .info>td>img {
+    width: 144px;
+    height: 144px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .likeMovies img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    margin-top: 30px;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
 <div id="profileContainer" class="bg-light">
-<table class="profileTable">
-  <tr class="info">
-
-  </tr>
-  <tr class="likeMovie"></tr>
-</table>
-</div>
-<div class="container">
-  <h1>{{ account.username }}님의 프로필
-    {% if user != account %}
-    {% with account.followers.all as followers %}
-    <a href="{% url 'accounts:follow' account.pk %}">
-      {% if user in followers %}
-      팔로우 취소
-      {% else %}
-      팔로우
-      {% endif %}
+  <table>
+    <tr class="info align-center">
+      <td>
+        {% if account.image %}
+        <img src="{{ account.image.url }}" alt="{{ account.image.name }}">
+        {% else %}
+        <i class="fas fa-user-circle fa-9x"></i>
+        {% endif %}
+        &nbsp&nbsp&nbsp
+      </td>
+      <td>
+        <h2 style="display: inline;">{{ account.username }}</h2>&nbsp&nbsp&nbsp
+        {% if user != account %}
+        {% with account.followers.all as followers %}
+        <a href="{% url 'accounts:follow' account.pk %}">
+          <button type="button" class="btn btn-secondary">
+            {% if user in followers %}
+            팔로우 취소
+            {% else %}
+            팔로우
+            {% endif %}
+          </button>
+        </a>
+        {% endwith %}
+        {% endif %}
+        <br><br>
+        <p>리뷰 <b>{{ account.review_set.all.count }}</b>&nbsp&nbsp&nbsp팔로워
+          <b>{{ account.followers.all.count }}</b>&nbsp&nbsp&nbsp팔로우<b>{{ account.followings.all.count }}</b></p>
+        <p><b>{{ account.first_name }}</b></p>
+        <p>{{ account.email }}</p>
+      </td>
+    </tr>
+  </table>
+  <h4 style="color:gray;" class="my-3">{{ account.username }}이 좋아하는 영화</h4>
+  <div class="likeMovies row">
+      {% for movie in account.like_movies.all %}
+      <a href="{% url 'movies:detail' movie.pk %}">
+      <div class="col-4" >
+        <img src="https://image.tmdb.org/t/p/w500/{{ movie.backdrop_path }}" alt="{{ movie.title }} 포스터 이미지">
+      </div>
     </a>
-    {% endwith %}
-    {% endif %}
-  </h1><br>
-  <h2>작성한 평점</h2>
-  {% for review in account.review_set.all %}
-  <p>내용 : {{ review.content }}, 평점: {{ review.score }}</p>
-  {% empty %}
-  <h1>평점 정보가 없습니다.</h1>
-  {% endfor %}
-  <hr>
-  <h2>좋아하는 영화</h2>
-  {% for movie in accounts.like_movies.all %}
-  <h3>
-    {{ movie.title }}
-  </h3>
-  {% empty %}
-  <h1>좋아하는 영화가 없습니다.</h1>
-  {% endfor %}
-  <hr>
-  <h4>팔로워 <b>{{ account.followers.all.count }}</b> 팔로우 <b>{{ account.followings.all.count }}</b> </h4>
+      {% empty %}
+      <p>좋아하는 영화가 없습니다.</p>
+      {% endfor %}
+  </div>
 </div>
 {% endblock %}
