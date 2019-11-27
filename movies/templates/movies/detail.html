@@ -1,33 +1,98 @@
 {% extends 'movies/base2.html' %}
 {% block style %}
 <style>
-#bg {
-  margin-top: 54px;
-  width:100%;
-}
+  #bg {
+    margin-top: 54px;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  table img {
+    width: 300px;
+    height: 450px;
+  }
+
+  table h1 {
+    color: white;
+    display: inline;
+  }
+
+  table h3 {
+    color: gray;
+    display: inline;
+  }
+
+  table p {
+    color: white;
+  }
+
+  #contentSection i {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: whitesmoke;
+  }
+
+  #contentSection i:hover {
+    color: gray;
+  }
+
+  #cast img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
-<div id="bg" 
-  style="background-image: url('https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}'),-webdit-gradient(90deg, rgba(0,0,0,1) 43%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%);
+<div id="bg" style="background-image: linear-gradient(90deg, rgba(0,0,0,1) 40%, rgba(0,0,0,0.4640231092436975) 85%, rgba(0,0,0,0.676908263305322) 100%),url('https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}');
   background-repeat: no-repeat;
   background-size: 100%;
-
   ">
-  
-<div class="container">
-    <img src="{{ movie.backdrop_path }}" alt="" style="width:25%">
-    <p>{{ movie.title_en }}, {{ movie.open_date }}</p>
-    <hr>
-    <h3>평점 <b>{{ movie.score }}</b></h3>
-    <p>개요 <b>{{ movie.genre }}</b></p>
-    <p>등급 <b>{{ movie.watch_grade }}</b></p>
-    <p>흥행 누적관객 <b>{{ movie.audience }}</b></p>
-    <hr>
-    <h2>줄거리</h2>
-    <p>{{ movie.description }}</p>
-</div><h1>{{ movie.title }}</h1>
+  <div class="container row mx-auto">
+    <table>
+      <tr>
+        <td>
+          <img src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="">
+        </td>
+        <td style="width:50px;">
+
+        </td>
+        <td id="contentSection">
+          <h1>{{ movie.title }}</h1>
+          <h3> ({{ movie.release_date }})</h3>{% if is_now %}&nbsp;&nbsp;<button type="button"
+            class="btn btn-secondary">상영중</button>{% endif %}
+          <p>평점 {{ movie.vote_average }} 상영시간 {{ movie.runtime }}ms</p>
+          <br>
+          <a href="" title="좋아요"><i class="fas fa-thumbs-up fa-3x"></i></a>
+          {% if is_now or is_up %}
+          <a href="" title="같이 볼래요"><i class="fas fa-heart fa-3x"></i></a>
+          {% endif %}
+          <a href="" title="광고 보러가기"><i class="far fa-play-circle fa-3x"></i></a>
+          <br>
+          <br>
+          {% if movie.tagline %}
+          <b>
+            <p>"{{ movie.tagline }}"</p>
+          </b>
+          {% endif %}
+          <p>{{ movie.overview }}</p>
+          <br>
+          <br>
+          <div class="row" id="cast">
+            {% for people in peoples %}
+            <div class="col-3">
+              <img src="https://image.tmdb.org/t/p/w500{{ people.profile_path }}" alt="{{ people.name }}">
+              <p>{{ people.name }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 <button><a href="{% url 'movies:index' %}" style="text-decoration: none;">목록</a></button>
 <hr>

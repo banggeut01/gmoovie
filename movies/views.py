@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import ReviewForm
-from .models import Movie,Review
+from .models import Movie, Review, People
 # Create your views here.
 # def index(request):
 #     if request.user.is_authenticated:
@@ -35,10 +35,23 @@ def index(request):
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     review_form = ReviewForm()
+    is_now, is_up = False, False # 현재 상영중, 개봉 예정
+    if int(movie.category) & 1: is_up = True
+    if int(movie.category) & 2: is_now = True
+    peoples = []
+    casts = movie.cast.all()
+    for cast in casts:
+        people = People.objects.filter(id=cast.id).first()
+        if people:
+            peoples.append(people)
     context = {
         'movie': movie,
-        'review_form': review_form
+        'review_form': review_form,
+        'is_up': is_up,
+        'is_now': is_now,
+        'peoples': peoples
     }
+    
     return render(request,'movies/detail.html',context)
 
 @require_POST
