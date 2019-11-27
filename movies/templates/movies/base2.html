@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SW | 영화 같이 볼래요?</title>
+  <link rel="shortcut icon" type="image/x-icon" sizes="32x32" href="{% static 'movies/css/favicon.ico' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'movies/css/base_style.css' %}">
+  <script src="https://kit.fontawesome.com/93f188e0ea.js" crossorigin="anonymous"></script>
+  <style>
+    .container-fluid {
+      height: 100%;
+    }
+
+    * {
+      margin: 0px;
+      padding: 0px;
+      font-family: sans-serif;
+    }
+
+    #sidebar,
+    #sidebar2 {
+      position: fixed;
+      width: 200px;
+      height: 100%;
+      background: #151719;
+      top: 54px;
+      left: -200px;
+      transition: all 500ms linear;
+      z-index: 1000;
+    }
+
+    #sidebar_fixed {
+      position: fixed;
+      width: 75px;
+      height: 100%;
+      background: #151719;
+      top: 54px;
+      left: 0;
+      z-index: 900;
+    }
+
+    #sidebar.active,
+    #sidebar2.active {
+      left: 0px;
+    }
+
+    #sidebar ul li,
+    #sidebar2 ul li {
+      color: rgba(230, 230, 230, 0.9);
+      list-style: none;
+      padding: 15px 10px;
+    }
+
+    #sidebar ul li.able:hover,
+    #sidebar2 ul li.able:hover {
+      background-color: rgb(107, 107, 107);
+      cursor: pointer;
+    }
+
+    #sidebar_fixed ul li {
+      color: rgba(230, 230, 230, 0.9);
+      list-style: none;
+      padding: 15px 10px;
+    }
+
+    #sidebar_fixed ul li i {
+      margin-left: 20px;
+      margin-right: auto;
+    }
+
+    #sidebar_fixed ul li.able:hover {
+      background-color: rgb(107, 107, 107);
+      cursor: pointer;
+    }
+
+    #sidebar ul {
+      border-bottom: 1px solid rgba(100, 100, 100, 0.3);
+    }
+
+    #sidebar .toggle-btn {
+      position: absolute;
+      left: 230px;
+      top: 20px;
+    }
+
+    .navbar .toggle-btn span {
+      display: block;
+      width: 30px;
+      height: 3px;
+      background: #ffffff;
+      margin: 6px 0px;
+    }
+
+    .navbar {
+      background: #151719;
+      height: 54px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    #sidebar ul li img {
+      width: 30px;
+      border-radius: 30px;
+    }
+
+    .NavBar-left>*,
+    .NavBar-right>* {
+      height: 38px;
+    }
+
+    .NavBar-right>a {
+      width: 38px;
+      height: 38px;
+    }
+
+    .NavBar-right>a>img,
+    .NavBar-right img {
+      width: 38px;
+      height: 38px;
+      border-radius: 30px;
+    }
+
+    .NavBar-right>a>i {
+      margin-top: 5px;
+      color: whitesmoke;
+    }
+
+    .NavBar-right>li>a>i {
+      margin-bottom: 5px;
+      color: whitesmoke;
+    }
+
+    .NavBar-right>a>i:hover {
+      color: rgb(255, 52, 52);
+      cursor: pointer;
+    }
+  </style>
+  {% block style %}
+  {% endblock %}
+</head>
+
+<body>
+  <nav class="navbar">
+    <!-- Navbar content -->
+    <div class="NavBar-left row">
+      <div class="toggle-btn mx-4" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <a href="{% url 'movies:index' %}">
+        <img src="{% static 'movies/images/로고0.png' %}" alt="navbar_logo" style="height:38px;">
+      </a>
+      <form class="form-inline mx-4">
+        <input class="form-control mr-sm-2" type="search" placeholder="영화 검색하기" aria-label="Search">
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+    <div class="NavBar-right row mr-3">
+      <a style="display: inline;">
+        <i class="far fa-comment-dots fa-2x"></i>
+      </a>
+      <li class="nav-item dropdown" style="display: inline;">
+        <a class="nav-link dropdown-toggle pt-1" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+          aria-expanded="false">
+          {% if user.image %}
+          <img src="{{ user.image.url }}" alt="{{ user.image.name }}">
+          {% else %}
+          <i class="fas fa-user-circle fa-2x"></i>
+          {% endif %}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" style="z-index:1000;">
+          <a class="dropdown-item disabled" href="#" aria-disabled="true">{{ user.username }}</a>
+          <a class="dropdown-item" href="#">내 프로필</a>
+          <a class="dropdown-item" href="{% url 'accounts:update' %}">내정보 수정</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
+        </div>
+      </li>
+
+    </div>
+  </nav>
+  <div class="container">
+    <div id="sidebar_fixed">
+      <ul>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-home"></i>
+          </li>
+        </a>
+        <li class="able">
+          <i class="fas fa-thumbs-up"></i>
+        </li>
+        <li class="able">
+          <i class="fas fa-heart"></i>
+        </li>
+      </ul>
+    </div>
+    <div id="sidebar">
+      <ul>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-home"> Home</i>
+          </li>
+        </a>
+        <li class="able">
+          <i class="fas fa-thumbs-up"> 좋아요</i>
+        </li>
+        <li class="able">
+          <i class="fas fa-heart"> 같이 볼래요</i>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          팔로잉
+        </li>
+        <!-- <li for 문></li> -->
+        {% for following in user.followings.all %}
+        <a>
+          <li class="able">
+            {% if following.image %}
+            <img src="{{ following.image.url }}" alt="{{ following.image.name }}"> {{ following.username }}
+            {% else %}
+            <i class="fas fa-user-circle fa-2x"></i> following.username
+            {% endif %}
+          </li>
+        </a>
+        {% endfor %}
+      </ul>
+      <ul>
+        <li class="able" onclick="toggleSidebar2()">더보기 <i class="fas fa-chevron-right"></i></li>
+      </ul>
+      @copyright
+    </div>
+    <div id="sidebar2">
+      <ul>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-star"> 인기순</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-trophy"> 평점순</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:index' %}"></a>
+        <li class="able">
+          <i class="fas fa-video"> 상영중</i>
+        </li>
+        </a>
+        <a href="{% url 'movies:index' %}"></a>
+        <li class="able">
+          <i class="far fa-hand-point-right"> 개봉예정</i>
+        </li>
+        </a>
+      </ul>
+      <ul>
+          <li class="able" onclick="toggleSidebar2()">닫기 <i class="fas fa-chevron-left"></i></li>
+        </ul>
+    </div>
+  </div>
+    {% block body %}
+    {% endblock  %}
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle('active');
+    }
+
+    function toggleSidebar2() {
+      document.getElementById("sidebar2").classList.toggle('active');
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

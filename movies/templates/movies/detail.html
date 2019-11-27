@@ -1,16 +1,34 @@
-{% extends 'movies/base.html' %}
+{% extends 'movies/base2.html' %}
+{% block style %}
+<style>
+#bg {
+  margin-top: 54px;
+  width:100%;
+}
+</style>
+{% endblock %}
+
 {% block body %}
-<h1>{{ movie.title }}</h1>
-<img src="{{ movie.backdrop_path }}" alt="" style="width:25%">
-<p>{{ movie.title_en }}, {{ movie.open_date }}</p>
-<hr>
-<h3>평점 <b>{{ movie.score }}</b></h3>
-<p>개요 <b>{{ movie.genre }}</b></p>
-<p>등급 <b>{{ movie.watch_grade }}</b></p>
-<p>흥행 누적관객 <b>{{ movie.audience }}</b></p>
-<hr>
-<h2>줄거리</h2>
-<p>{{ movie.description }}</p>
+<div id="bg" 
+  style="background-image: url('https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}'),-webdit-gradient(90deg, rgba(0,0,0,1) 43%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%);
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+  ">
+  
+<div class="container">
+    <img src="{{ movie.backdrop_path }}" alt="" style="width:25%">
+    <p>{{ movie.title_en }}, {{ movie.open_date }}</p>
+    <hr>
+    <h3>평점 <b>{{ movie.score }}</b></h3>
+    <p>개요 <b>{{ movie.genre }}</b></p>
+    <p>등급 <b>{{ movie.watch_grade }}</b></p>
+    <p>흥행 누적관객 <b>{{ movie.audience }}</b></p>
+    <hr>
+    <h2>줄거리</h2>
+    <p>{{ movie.description }}</p>
+</div><h1>{{ movie.title }}</h1>
+</div>
 <button><a href="{% url 'movies:index' %}" style="text-decoration: none;">목록</a></button>
 <hr>
 <form action="{% url 'movies:new' movie.pk %}" method="POST">
