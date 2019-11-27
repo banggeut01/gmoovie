@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>SW 같이 영화 볼래요?</title>
+  <title>SW | 영화 같이 볼래요?</title>
   <link rel="shortcut icon" type="image/x-icon" sizes="32x32" href="{% static 'movies/css/favicon.ico' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -23,7 +23,8 @@
       font-family: sans-serif;
     }
 
-    #sidebar {
+    #sidebar,
+    #sidebar2 {
       position: fixed;
       width: 200px;
       height: 100%;
@@ -31,7 +32,7 @@
       top: 54px;
       left: -200px;
       transition: all 500ms linear;
-      z-index:1000;
+      z-index: 1000;
     }
 
     #sidebar_fixed {
@@ -41,20 +42,23 @@
       background: #151719;
       top: 54px;
       left: 0;
-      z-index:900;
+      z-index: 900;
     }
 
-    #sidebar.active {
+    #sidebar.active,
+    #sidebar2.active {
       left: 0px;
     }
 
-    #sidebar ul li {
+    #sidebar ul li,
+    #sidebar2 ul li {
       color: rgba(230, 230, 230, 0.9);
       list-style: none;
       padding: 15px 10px;
     }
 
-    #sidebar ul li.able:hover {
+    #sidebar ul li.able:hover,
+    #sidebar2 ul li.able:hover {
       background-color: rgb(107, 107, 107);
       cursor: pointer;
     }
@@ -129,6 +133,11 @@
       color: whitesmoke;
     }
 
+    .NavBar-right>li>a>i {
+      margin-bottom: 5px;
+      color: whitesmoke;
+    }
+
     .NavBar-right>a>i:hover {
       color: rgb(255, 52, 52);
       cursor: pointer;
@@ -162,17 +171,18 @@
       </form>
     </div>
     <div class="NavBar-right row mr-3">
-
-
       <a style="display: inline;">
         <i class="far fa-comment-dots fa-2x"></i>
       </a>
       <li class="nav-item dropdown" style="display: inline;">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+        <a class="nav-link dropdown-toggle pt-1" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
           aria-expanded="false">
+          {% if user.image %}
           <img src="{{ user.image.url }}" alt="{{ user.image.name }}">
+          {% else %}
+          <i class="fas fa-user-circle fa-2x"></i>
+          {% endif %}
         </a>
-
         <div class="dropdown-menu dropdown-menu-right" style="z-index:1000;">
           <a class="dropdown-item disabled" href="#" aria-disabled="true">{{ user.username }}</a>
           <a class="dropdown-item" href="#">내 프로필</a>
@@ -186,9 +196,6 @@
   </nav>
   <div class="container">
     <div id="sidebar_fixed">
-      <!-- <div class="toggle-btn" onclick="toggleSidebar()">  -->
-
-      <!-- </div> -->
       <ul>
         <a href="{% url 'movies:index' %}">
           <li class="able">
@@ -204,9 +211,6 @@
       </ul>
     </div>
     <div id="sidebar">
-      <!-- <div class="toggle-btn" onclick="toggleSidebar()">  -->
-
-      <!-- </div> -->
       <ul>
         <a href="{% url 'movies:index' %}">
           <li class="able">
@@ -225,41 +229,62 @@
           팔로잉
         </li>
         <!-- <li for 문></li> -->
-        <li class="able">
-          <img src="/static/movies/images/무무.jpg" alt=""> 무무비
-        </li>
-        <li class="able">
-          <img src="/static/movies/images/지니.png" alt=""> 지니무비
-        </li>
-        <li class="able">
-          <img src="/static/movies/images/무무.jpg" alt=""> 무무비
-        </li>
-        <li class="able">
-          <img src="/static/movies/images/지니.png" alt=""> 지니무비
-        </li>
-        <li class="able">
-          <img src="/static/movies/images/무무.jpg" alt=""> 무무비
-        </li>
-        <li class="able">
-          <img src="/static/movies/images/지니.png" alt=""> 지니무비
-        </li>
-        <li class="able">
-          <i class="fas fa-chevron-down"> # 개 더보기</i>
-        </li>
+        {% for following in user.followings.all %}
+        <a>
+          <li class="able">
+            {% if following.image %}
+            <img src="{{ following.image.url }}" alt="{{ following.image.name }}"> {{ following.username }}
+            {% else %}
+            <i class="fas fa-user-circle fa-2x"></i> following.username
+            {% endif %}
+          </li>
+        </a>
+        {% endfor %}
       </ul>
       <ul>
-        <li>더보기<i class="fas fa-chevron-right"></i></li>
+        <li class="able" onclick="toggleSidebar2()">더보기 <i class="fas fa-chevron-right"></i></li>
       </ul>
       @copyright
     </div>
+    <div id="sidebar2">
+      <ul>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-star"> 인기순</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-trophy"> 평점순</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:index' %}"></a>
+        <li class="able">
+          <i class="fas fa-video"> 상영중</i>
+        </li>
+        </a>
+        <a href="{% url 'movies:index' %}"></a>
+        <li class="able">
+          <i class="far fa-hand-point-right"> 개봉예정</i>
+        </li>
+        </a>
+      </ul>
+      <ul>
+          <li class="able" onclick="toggleSidebar2()">닫기 <i class="fas fa-chevron-left"></i></li>
+        </ul>
+    </div>
   </div>
   <div class="main">
-  {% block body %}
-  {% endblock  %}
-</div>
+    {% block body %}
+    {% endblock  %}
+  </div>
   <script>
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle('active');
+    }
+
+    function toggleSidebar2() {
+      document.getElementById("sidebar2").classList.toggle('active');
     }
   </script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
