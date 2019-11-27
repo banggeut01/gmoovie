@@ -17,11 +17,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from message.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('movies/', include('movies.urls'))
+    path('movies/', include('movies.urls')),
+    path('conversation', broadcast),
+    path('conversations/', conversations),
+    path('conversations/<int:id>/delivered',delivered),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
