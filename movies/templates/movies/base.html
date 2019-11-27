@@ -16,6 +16,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
   <script src="//js.pusher.com/4.0/pusher.min.js"></script>
   <style>
+    a {
+      text-decoration: none;
+    }
+
     .container-fluid {
       height: 100%;
     }
@@ -254,7 +258,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" style="z-index:1000;">
           <a class="dropdown-item disabled" href="#" aria-disabled="true">{{ user.username }}</a>
-          <a class="dropdown-item" href="#">내 프로필</a>
+          <a class="dropdown-item" href="{% url 'accounts:detail' user.pk %}">내 프로필</a>
           <a class="dropdown-item" href="{% url 'accounts:update' %}">내정보 수정</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
@@ -295,11 +299,11 @@
       </ul>
       <ul>
         <li>
-          팔로잉
+          팔로우
         </li>
         <!-- <li for 문></li> -->
         {% for following in user.followings.all %}
-        <a>
+        <a href="{% url 'accounts:detail' following.pk %}">
           <li class="able">
             {% if following.image %}
             <img src="{{ following.image.url }}" alt="{{ following.image.name }}"> {{ following.username }}

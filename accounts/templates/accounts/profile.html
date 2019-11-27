@@ -20,6 +20,11 @@
     object-fit: cover;
     margin-top: 30px;
   }
+
+  .follower img, 
+  .following img {
+    
+  }
 </style>
 {% endblock %}
 
@@ -60,15 +65,45 @@
   </table>
   <h4 style="color:gray;" class="my-3">{{ account.username }}이 좋아하는 영화</h4>
   <div class="likeMovies row">
-      {% for movie in account.like_movies.all %}
-      <a href="{% url 'movies:detail' movie.pk %}">
-      <div class="col-4" >
+    {% for movie in account.like_movies.all %}
+    <a href="{% url 'movies:detail' movie.pk %}">
+      <div class="col-4">
         <img src="https://image.tmdb.org/t/p/w500/{{ movie.backdrop_path }}" alt="{{ movie.title }} 포스터 이미지">
       </div>
     </a>
-      {% empty %}
-      <p>좋아하는 영화가 없습니다.</p>
-      {% endfor %}
+    {% empty %}
+    <p>좋아하는 영화가 없습니다.</p>
+    {% endfor %}
   </div>
+  {% if user == account %}
+  <h4 style="color:gray;" class="my-3">팔로워 {{ account.followers.all.count }}</h4>
+  <div class="row follower">
+    {% for follower in account.followers.all %}
+    <a href="{% url 'accounts:detail' follower.pk %}">
+      <div class="col-2">
+        {% if follower.image %}
+        <img src="{{ follower.image.url }}" alt="{{ follower.image.name }}">
+        {% else %}
+        <i class="fas fa-user-circle fa-9x"></i>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  <h4 style="color:gray;" class="my-3">팔로우 {{ account.followings.all.count }}</h4>
+  <div class="row following">
+    {% for following in account.followings.all %}
+    <a href="{% url 'accounts:detail' following.pk %}"></a>
+    <div class="col-2">
+      {% if following.image %}
+      <img src="{{ following.image.url }}" alt="{{ following.image.name }}">
+      {% else %}
+      <i class="fas fa-user-circle fa-9x"></i>
+      {% endif %}
+    </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
