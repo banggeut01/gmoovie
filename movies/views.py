@@ -3,28 +3,46 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import ReviewForm
 from .models import Movie, Review, People, State, Wish
-# Create your views here.
-# def index(request):
-#     if request.user.is_authenticated:
-#         movies = Movie.objects.all()
-#         context = {
-#             'movies' : movies
-#         }
-#         return render(request,'movies/index.html',context)
-#     else:
-#         return redirect('accounts:login')
+
 def index(request):
     if request.user.is_authenticated:
+        user = request.user
         movies = Movie.objects.all()
+        top_rate = []
         nowplaying = []
         upcoming = []
+        recommend = []
+        populars = []
+        like_movies = user.like_movies.all()
+        for like in like_movies:
+            person = like.cast.all()
+            for per in person:
+                rec_movies = per.known_for.all()
+                for rec_movie in rec_movies:
+                    if rec_movie not in like_movies and rec_movie not in recommend:
+                        recommend.append(rec_movie)
+                        break
+        popular_idx = [429617, 330457, 480042, 475557, 453075, 466272, 420818, 290859, 474350, 423204, 453405, 283995, 384018]
+        for popular in popular_idx:
+            for movie in movies:
+                if popular == int(movie.pk):
+                    populars.append(movie)
+                    break
+        for i in range(12):
+            top_rate.append(movies[i])
         for movie in movies:
             if int(movie.category) & 2: # 현재 상영중
-                nowplaying.append(movie)
+                if len(nowplaying) < 12:
+                    nowplaying.append(movie)
             if int(movie.category) & 1: # 개봉 예정
-                upcoming.append(movie)
+                if len(upcoming) < 12:
+                    upcoming.append(movie)
+        if not recommend:
+            recommend = nowplaying
         context = {
-            'movies' : movies,
+            'recommends': recommend,
+            'populars': populars,
+            'movies' : top_rate,
             'nowplaying': nowplaying,
             'upcoming': upcoming
         }
@@ -125,3 +143,69 @@ def wishs(request, account_pk):
         'wishs': wishs,
     }
     return render(request, 'movies/wish.html', context)
+
+def search(request):
+    genres = Genre.objects.all()
+    movies = Movie.objects.all()
+    peoples = People.objects.all()
+    word = request.GET.get('search')
+    if word.is_valid():
+        result_genres = []
+        result_movies = []
+        result_peoples = []
+        genre_movies = []
+        for genre in genres:
+            if word in genre.name:
+                result_genres.append(genre)
+        if result_genres:
+            for genre in result_genres:
+                genre_movies = genre.movie_ids.all()
+        for movie in movies:
+            if word in movie.title:
+                result_movies.append(movie)
+        for people in peoples:
+            if word in people.name:
+                result_peoples.append(people)
+        context = {
+            'genres': genre_movies,
+            'movies': result_movies,
+            'peoples': result_peoples
+        }
+        
+    return render(request,'movies/search.html', context)
+        
+def top_movie(request):
+    results = []
+    movies = Movie.objects.all()
+    for i in range(99, 0, -1):
+        for movie in movies:
+            if str(float(i)/10)[:3] == str(movie.vote_average)[:3]:
+                results.append(movie)
+        if len(results) > 20:
+            break
+    context = {
+        'top_movies': results,
+    }
+    return render(request,'movies/search.html', context)
+
+def now_playing(request):
+    results = []
+    movies = Movie.objects.all()
+    for movie in movies:
+        if int(movie.category) & 2:
+            results.append(movie)
+    context = {
+        'now_playing': results,
+    }
+    return render(request,'movies/search.html', context)
+    
+def up_coming(request):
+    results = []
+    movies = Movie.objects.all()
+    for movie in movies:
+        if int(movie.category) & 1:
+            results.append(movie)
+    context = {
+        'up_coming': results,
+    }
+    return render(request,'movies/search.html', context)

@@ -1,0 +1,101 @@
+{% extends './base.html' %}
+{% block style %}
+.main {
+  width: 100% - 75px;
+  margin-top: 100px;
+  margin-left: 75px;
+}
+.topic {
+  color: white;
+  margin-top: 100px;
+}
+{% endblock %}
+​
+{% block body %}
+<div class="main">
+  {% if genres %}
+  <h2 class="topic">장르 검색 결과</h2>
+  <div class="row">
+    {% for genre in genres %}
+    {% if forloop.counter < 21 %}
+    <div class="col-3">
+        <a href="{% url 'movies:detail' genre.pk %}"><img
+          src="https://image.tmdb.org/t/p/w500/{{genre.backdrop_path}}" class='my-image' alt="" style="width:100%; z-index: -100;"><br>
+        <h5 class="movieTitle">{{genre.title}}</h5>
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% if movies %}
+  <h2 class="topic">영화명 검색 결과</h2>
+  <div class="row">
+    {% for movie in movies %}
+    {% if forloop.counter < 21 %}
+    <div class="col-3">
+        <a href="{% url 'movies:detail' movie.pk %}"><img
+          src="https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}" class='my-image' alt="" style="width:100%; z-index: -100;"><br>
+        <h5 class="movieTitle">{{movie.title}}</h5>
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% if peoples %}
+  <h2 class="topic">배우 검색 결과</h2>
+  <div class="row">
+    {% for people in peoples %}
+    {% if forloop.counter < 21 and people.profile_path %}
+    <div class="col-3">
+        <a href="{% url 'movies:detail' people.pk %}"><img
+          src="https://image.tmdb.org/t/p/w500/{{people.profile_path}}" class='my-image' alt="" style="width:100%; z-index: -100;"><br>
+        <h5 class="movieTitle">{{people.title}}</h5>
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% if top_movies %}
+  <h2 class="topic">평점순 영화 목록</h2>
+  <div class="row">
+    {% for top in top_movies %}
+    <div class="col-3">
+        <a href="{% url 'movies:detail' top.pk %}"><img
+          src="https://image.tmdb.org/t/p/w500/{{top.backdrop_path}}" class='my-image' alt="" style="width:100%; z-index: -100;"><br>
+        <h5 class="movieTitle">{{top.title}}</h5>
+      </a>
+    </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+  {% if now_playing %}
+  <h2 class="topic">상영중인 영화 목록</h2>
+  <div class="row">
+    {% for now in now_playing %}
+    <div class="col-3">
+        <a href="{% url 'movies:detail' now.pk %}"><img
+          src="https://image.tmdb.org/t/p/w500/{{now.backdrop_path}}" class='my-image' alt="" style="width:100%; z-index: -100;"><br>
+        <h5 class="movieTitle">{{now.title}}</h5>
+      </a>
+    </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+  {% if up_coming %}
+  <h2 class="topic">개봉예정 영화 목록</h2>
+  <div class="row">
+    {% for up in up_coming %}
+    <div class="col-3">
+        <a href="{% url 'movies:detail' up.pk %}"><img
+          src="https://image.tmdb.org/t/p/w500/{{up.backdrop_path}}" class='my-image' alt="" style="width:100%; z-index: -100;"><br>
+        <h5 class="movieTitle">{{up.title}}</h5>
+      </a>
+    </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
