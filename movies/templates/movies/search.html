@@ -97,5 +97,18 @@
     {% endfor %}
     </div>
   {% endif %}
+  {% if popular %}
+  <h2 class="topic">인기순 영화 목록</h2>
+  <div class="row">
+    {% for pop in popular %}
+    <div class="col-3">
+        <a href="{% url 'movies:detail' pop.pk %}"><img
+          src="https://image.tmdb.org/t/p/w500/{{pop.backdrop_path}}" class='my-image' alt="" style="width:100%; z-index: -100;"><br>
+        <h5 class="movieTitle">{{pop.title}}</h5>
+      </a>
+    </div>
+    {% endfor %}
+    </div>
+  {% endif %}
 </div>
 {% endblock %}

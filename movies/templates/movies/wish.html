@@ -103,13 +103,12 @@
   <div class="container row mx-auto">
     <table class="table">
       <tr>
-        <a href="{% url 'movies:detail' wish.movie.pk %}">
-          <td>
+        <td>
+          <a href="{% url 'movies:detail' wish.movie.pk %}">
             <img src="https://image.tmdb.org/t/p/w500/{{wish.movie.poster_path}}" alt="{{ wish.movie.title }} 포스터 이미지">
-          </td>
-        </a>
+          </a>
+        </td>
         <td style="width:50px;">
-
         </td>
         <td id="contentSection">
           <h1>{{ wish.movie.title }} ({{ wish.state.state }}) </h1>

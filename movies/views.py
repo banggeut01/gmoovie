@@ -210,6 +210,20 @@ def up_coming(request):
     }
     return render(request,'movies/search.html', context)
 
+def popular(request):
+    results = []
+    popular_idx = [429617, 330457, 480042, 475557, 453075, 466272, 420818, 290859, 474350, 423204, 453405, 283995, 384018]
+    movies = Movie.objects.all()
+    for pop in popular_idx:
+        for movie in movies:
+            if int(movie.pk) == pop:
+                results.append(movie)
+                break
+    context = {
+        'popular': results,
+    }
+    return render(request,'movies/search.html', context)
+
 def people_movies(request, people_pk):
     people = get_object_or_404(People, pk=people_pk)
     movies = people.known_for.all()
