@@ -85,6 +85,11 @@
   #review tr {
     border: 20px;
   }
+
+  #wishbt {
+    border: 0;
+    background-color: rgba(255, 255, 255, 0);
+  }
 </style>
 {% endblock %}
 
@@ -121,9 +126,7 @@
               style="color: rgb(255, 255, 255);"></i>
           </a>
           {% endif %}
-          {% if is_now or is_up %}
-          <a href="{% url 'movies:wish' movie.id %}" title="같이 볼래요"><i class="fas fa-heart fa-3x"></i></a>
-          {% endif %}
+          <!-- 광고보기 -->
           <!-- trigger modal -->
           <a href="" title="광고 보러가기" data-toggle="modal" data-target="#videoModal"><i
               class="far fa-play-circle fa-3x"></i></a>
@@ -149,6 +152,25 @@
               </div>
             </div>
           </div>
+          <!-- 같이볼래요 -->
+          {% if is_now or is_up %}
+          <!-- 이미 보고싶어하는 영화 -->
+          {% if user in movie.wish_users.all %}
+          <a href="{% url 'movies:wish' movie.id %}"><i class="fas fa-heart fa-3x" style="color:red;"></i></a>
+          {% else %}
+          <form action="{% url 'movies:wish' movie.id %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button id="wishbt" type="submit"><i class="fas fa-heart fa-3x"></i></button>
+            <select required class="custom-select " name="state" style="display: inline; width:300px;">
+              <option selected value="">지역을 선택 후 ♥를 눌러주세요</option>
+              {% for state in states %}
+              <option value="{{ state.id }}">{{ state.state }}</option>
+              {% endfor %}
+            </select>
+            <!-- <a href="{% url 'movies:wish' movie.id %}" title="같이 볼래요"><i class="fas fa-heart fa-3x"></i></a> -->
+          </form>
+          {% endif %}
+          {% endif %}
           <br>
           <br>
           {% if movie.tagline %}

@@ -67,7 +67,7 @@ def logout(request):
     auth_logout(request)
     return redirect('movies:index')
 
-def follow(request):
+def follow(request, account_pk):
     user_profile = get_object_or_404(get_user_model(), pk=account_pk)
     if request.user in user_profile.followers.all(): 
         user_profile.followers.remove(request.user)

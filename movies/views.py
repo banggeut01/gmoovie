@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import ReviewForm
-from .models import Movie, Review, People
+from .models import Movie, Review, People, State, Wish
 # Create your views here.
 # def index(request):
 #     if request.user.is_authenticated:
@@ -45,14 +45,15 @@ def detail(request,movie_pk):
         people = People.objects.filter(id=cast.id).first()
         if people:
             peoples.append(people)
+    states = State.objects.all()
     context = {
         'movie': movie,
         'review_form': review_form,
         'is_up': is_up,
         'is_now': is_now,
-        'peoples': peoples
+        'peoples': peoples,
+        'states': states,
     }
-    
     return render(request,'movies/detail.html',context)
 
 @require_POST
@@ -100,10 +101,27 @@ def like_movies(request):
 def wish(request,movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'POST':
-        pass
+        print(request.POST)
+        wish = Wish()
+        wish.user = request.user
+        wish.movie = movie
+        wish.state_id = request.POST.get('state')
+        wish.is_male = request.user.is_male
+        wish.save()
+        return redirect('movies:detail', movie_pk)
     else: # get
-        pass
-        context = {
-            'movie': movie,
-        }
-        return render(request, 'movies/wishForm.html', context)
+        wish = Wish.objects.filter(user=request.user, movie=movie_pk)
+        movie.wish_users.remove(request.user)
+        return redirect('movies:detail', movie_pk)
+
+@login_required
+def wishs(request, account_pk):
+    # wishs = request.user.wish_movies.all()
+    # context = {
+        # 'wishs': wishs,
+    # }
+    wishs = Wish.objects.filter(user_id=account_pk)
+    context = {
+        'wishs': wishs,
+    }
+    return render(request, 'movies/wish.html', context)

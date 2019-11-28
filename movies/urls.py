@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:movie_pk>/like/',views.like,name='like'),
     path('like_movies/', views.like_movies, name='like_movies'),
     path('<int:movie_pk>/wish/', views.wish, name='wish'),
+    path('<int:account_pk>/wishs/', views.wishs, name='wishs'),
 ]

@@ -276,9 +276,11 @@
             <i class="fas fa-thumbs-up"></i>
           </li>
         </a>
-        <li class="able">
-          <i class="fas fa-heart"></i>
-        </li>
+        <a href="{% url 'movies:wishs' user.pk %}">
+          <li class="able">
+            <i class="fas fa-heart"></i>
+          </li>
+        </a>
       </ul>
     </div>
     <div id="sidebar">
@@ -293,13 +295,15 @@
             <i class="fas fa-thumbs-up"> 좋아요</i>
           </li>
         </a>
-        <li class="able">
-          <i class="fas fa-heart"> 같이 볼래요</i>
-        </li>
+        <a href="{% url 'movies:wishs' user.pk %}">
+          <li class="able">
+            <i class="fas fa-heart"> 같이 볼래요</i>
+          </li>
+        </a>
       </ul>
       <ul>
         <li>
-          팔로우
+          팔로우 {{ user.followings.all.count }}
         </li>
         <!-- <li for 문></li> -->
         {% for following in user.followings.all %}
@@ -317,7 +321,6 @@
       <ul>
         <li class="able" onclick="toggleSidebar2()">더보기 <i class="fas fa-chevron-right"></i></li>
       </ul>
-      @copyright
     </div>
     <div id="sidebar2">
       <ul>

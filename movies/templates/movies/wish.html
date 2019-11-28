@@ -1,0 +1,150 @@
+{% extends 'movies/base2.html' %}
+{% block style %}
+<style>
+  .bg {
+    margin-top: 54px;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .table img {
+    width: 300px;
+    height: 450px;
+  }
+
+  .table h1 {
+    color: white;
+    display: inline;
+  }
+
+  .table h3 {
+    color: gray;
+    display: inline;
+  }
+
+  .table p {
+    color: white;
+  }
+
+  #contentSection i {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: whitesmoke;
+  }
+
+  #contentSection i:hover {
+    color: gray;
+  }
+
+  #cast img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  #reviewSection {
+    margin: 100px 100px;
+    box-shadow: 5px 5px 5px #111111;
+    padding: 30px;
+  }
+
+  #reviewSection img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 50px;
+  }
+
+  #reviewSection i {
+    width: 50px;
+    height: 50px;
+    color: #111133;
+  }
+
+  #reviewForm label {
+    display: none;
+  }
+
+  #reviewForm p,
+  #reviewForm input {
+
+    display: inline;
+  }
+
+  #reviewForm #id_content {
+    width: 1000px;
+  }
+
+  #reviewForm p {
+    color: #111111;
+  }
+
+  #review tr {
+    border: 20px;
+  }
+
+  #wishbt {
+    border: 0;
+    background-color: rgba(255, 255, 255, 0);
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<h4 style="color:gray;" class="my-3">{{ user.username }}님, 같이 영화 볼래요?</h4>
+{% for wish in wishs %}
+<div class="bg" style="background-image: linear-gradient(90deg, rgba(0,0,0,1) 40%, rgba(0,0,0,0.4640231092436975) 85%, rgba(0,0,0,0.676908263305322) 100%),url('https://image.tmdb.org/t/p/original/{{ wish.movie.backdrop_path }}');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  ">
+  <div class="container row mx-auto">
+    <table class="table">
+      <tr>
+        <a href="{% url 'movies:detail' wish.movie.pk %}">
+          <td>
+            <img src="https://image.tmdb.org/t/p/w500/{{wish.movie.poster_path}}" alt="{{ wish.movie.title }} 포스터 이미지">
+          </td>
+        </a>
+        <td style="width:50px;">
+
+        </td>
+        <td id="contentSection">
+          <h1>{{ wish.movie.title }} ({{ wish.state.state }}) </h1>
+
+          <div class="row" id="cast">
+            {% for wish_user in wish.movie.wish_users.all %}
+            {% if wish_user != user%}
+            <div>
+              <a href="{% url 'accounts:detail' wish_user.pk %}">
+                {% if wish_user.image %}
+                <img class="profile" src="{{ wish_user.image.url }}" alt="{{ wish_user.image.name }}">
+                {% else %}
+                <i class="fas fa-user-circle fa-5x"></i>
+                {% endif %}
+                <br>
+                <p>{{ wish_user.username }}
+                  {% if wish_user.is_male %}
+                  <i class="fas fa-mars"></i>
+                  {% else %}
+                  <i class="fas fa-venus"></i>
+                  {% endif %}<br>
+                  {{ wish.state.state }}
+                </p>
+              </a>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+{% empty %}
+<h4 style="color:gray;" class="my-3">같이 보고싶은 영화가 없어요.</h4>
+<h4 style="color:gray;" class="my-3">보고싶은 영화를 등록해보세요.</h4>
+{% endfor %}
+{% endblock %}

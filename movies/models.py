@@ -43,10 +43,6 @@ class Movie(models.Model):
 class State(models.Model): # 지역1 : "서울"
     state = models.CharField(max_length=30)
 
-class Area(models.Model): # 지역2 : "강남"
-    state = models.ForeignKey(State, on_delete=models.CASCADE)
-    area = models.CharField(max_length=30)
-
 class Wish(models.Model): # Movie-User N:M 보고싶어요
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(
@@ -54,7 +50,7 @@ class Wish(models.Model): # Movie-User N:M 보고싶어요
         on_delete=models.CASCADE
     )
     is_male = models.BooleanField() # 남:True, 여:False User 정보에도!
-    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
 
 class Review(models.Model):
     content = models.CharField(max_length=140)
