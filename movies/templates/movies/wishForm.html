@@ -32,7 +32,7 @@
 
 {% block body %}
 <div id="profileContainer" class="bg-light">
-  <h4 style="color:gray;" class="my-3">내가 좋아하는 영화</h4>
+  <h4 style="color:gray;" class="my-3"></h4>
   <div class="likeMovies row">
     {% for movie in user.like_movies.all %}
     <a href="{% url 'movies:detail' movie.pk %}">

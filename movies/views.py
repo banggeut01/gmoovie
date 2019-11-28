@@ -98,7 +98,12 @@ def like_movies(request):
 
 @login_required
 def wish(request,movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'POST':
         pass
     else: # get
-        return render(request, 'movies/wishForm.html')
+        pass
+        context = {
+            'movie': movie,
+        }
+        return render(request, 'movies/wishForm.html', context)

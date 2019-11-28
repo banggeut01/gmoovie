@@ -6,7 +6,7 @@ class ReviewForm(forms.ModelForm):
         model = Review
         exclude = ('user','movie')
 
-class WishForm(forms.ModelForm):
-    class Meta:
-        model = Wish
-        exclude = ('movie', 'user', 'is_male')
+# class WishForm(forms.ModelForm):
+#     class Meta:
+#         model = Wish
+#         exclude = ('movie', 'user', 'is_male')
