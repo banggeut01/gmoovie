@@ -65,7 +65,7 @@
       </td>
     </tr>
   </table>
-  <h4 style="color:gray;" class="my-3">{{ account.username }}이 좋아하는 영화</h4>
+  <h4 style="color:gray;" class="my-3">{{ account.username }}님이 좋아하는 영화</h4>
   <div class="likeMovies row">
     {% for movie in account.like_movies.all %}
     <a href="{% url 'movies:detail' movie.pk %}">
