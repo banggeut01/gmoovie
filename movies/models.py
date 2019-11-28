@@ -3,14 +3,14 @@ from django.conf import settings
 
 # Create your models here.
 class Genre(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
 class People(models.Model):
     name = models.CharField(max_length=100)
     profile_path = models.CharField(max_length=140)
     
 class Movie(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
     vote_average = models.FloatField()
     release_date = models.DateField() # 빈 곳 처리 blank=True, null=True
     overview = models.TextField()
@@ -41,7 +41,7 @@ class Movie(models.Model):
     )
 
 class State(models.Model): # 지역1 : "서울"
-    state = models.CharField(max_length=30)
+    state = models.CharField(max_length=100)
 
 class Wish(models.Model): # Movie-User N:M 보고싶어요
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
