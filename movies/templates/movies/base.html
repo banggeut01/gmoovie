@@ -1,236 +1,515 @@
-{% extends './base.html' %}
-{% block style %}
-  .main {
-    width: 100% - 75px;
-    margin-top: 100px;
-    margin-left: 75px;
-  }
-​
-  .bg_image {
-    z-index: -50;
-    height: 700px;
-    width: 100%;
-  }
-​
-  .recommend_word {
-    position: relative;
-    top:70%;
-    left:10%;
-  }
-​
-  .movielist {
-    position: relative;
-    margin-bottom: 30px;
-  }
-  
-  h2 {
-    color: white;
-  }
-​
-  .container {
-    width: 100%;
-  }
-​
-  .carousel-item {
-    width: 100%;
-  }
-​
-  .movieTitle {
-    font-size: 1.2vw;
-    color: white;
-  }
-​
-  .carousel-control-prev {
-    position: absolute;
-    width: 80px;
-  }
-​
-  .carousel-control-next {
-    position: absolute;
-    width: 80px;
-  }
-​
-  .col-3 img {
-    padding: 0;
-    width: 100%;
-  }
-{% endblock %}
-​
-{% block body %}
-<div id="recommendmovie" class="carousel slide" data-ride="carousel" style="position: relative;">
-  <div class="carousel-inner">
-    {% for recommend in recommends %}
-    {% if forloop.first %}
-    <div class="carousel-item active">
-      <div class="bg_image" style="background-image: linear-gradient(90deg, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 100%),url('https://image.tmdb.org/t/p/original{{recommend.backdrop_path}}');
-  background-repeat: no-repeat;
-  background-size: 100%;
-  ">
-        <div class="recommend_word container row">
-          <h1 style="display:block; color: white; background: rgba(0,0,0,0.5); margin-left: 75px;">SW에서 {{ user.username }}님만을 위해 추천해드려요</h1>
-          <a href="{% url 'movies:detail' recommend.pk %}"><button type="button" class="btn btn-light">보러가기</button></a>
-        </div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SW | 영화 같이 볼래요?</title>
+  <link rel="shortcut icon" type="image/x-icon" sizes="32x32" href="{% static 'movies/css/favicon.ico' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'movies/css/base_style.css' %}">
+  <script src="https://kit.fontawesome.com/93f188e0ea.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.2/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
+  <script src="//js.pusher.com/4.0/pusher.min.js"></script>
+  <style>
+    a {
+      text-decoration: none;
+    }
+
+    .container-fluid {
+      height: 100%;
+    }
+
+    * {
+      margin: 0px;
+      padding: 0px;
+      font-family: sans-serif;
+    }
+
+    #sidebar,
+    #sidebar2 {
+      position: fixed;
+      width: 200px;
+      height: 100%;
+      background: #151719;
+      top: 54px;
+      left: -200px;
+      transition: all 500ms linear;
+      z-index: 1000;
+    }
+
+    #app {
+      position: fixed;
+      width: 400px;
+      height: 100%;
+      background: #151719;
+      top: 54px;
+      right: -400px;
+      transition: all 500ms linear;
+      z-index: 1000;
+    }
+
+    #sidebar_fixed {
+      position: fixed;
+      width: 75px;
+      height: 100%;
+      background: #151719;
+      top: 54px;
+      left: 0;
+      z-index: 900;
+    }
+
+    #sidebar.active,
+    #sidebar2.active {
+      left: 0px;
+    }
+
+    #app.active {
+      right: 0px;
+    }
+
+    #sidebar ul li,
+    #sidebar2 ul li {
+      color: rgba(230, 230, 230, 0.9);
+      list-style: none;
+      padding: 15px 10px;
+    }
+
+    #sidebar ul li.able:hover,
+    #sidebar2 ul li.able:hover {
+      background-color: rgb(107, 107, 107);
+      cursor: pointer;
+    }
+
+    #sidebar_fixed ul li {
+      color: rgba(230, 230, 230, 0.9);
+      list-style: none;
+      padding: 15px 10px;
+    }
+
+    #sidebar_fixed ul li i {
+      margin-left: 20px;
+      margin-right: auto;
+    }
+
+    #sidebar_fixed ul li.able:hover {
+      background-color: rgb(107, 107, 107);
+      cursor: pointer;
+    }
+
+    #sidebar ul {
+      border-bottom: 1px solid rgba(100, 100, 100, 0.3);
+    }
+
+    #sidebar .toggle-btn {
+      position: absolute;
+      left: 230px;
+      top: 20px;
+    }
+
+    .navbar .toggle-btn span {
+      display: block;
+      width: 30px;
+      height: 3px;
+      background: #ffffff;
+      margin: 6px 0px;
+    }
+
+    .navbar {
+      z-index: 1000;
+      background: #151719;
+      height: 54px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    #sidebar ul li img {
+      width: 30px;
+      border-radius: 30px;
+    }
+
+    .NavBar-left>*,
+    .NavBar-right>* {
+      height: 38px;
+    }
+
+    .NavBar-right>a {
+      width: 38px;
+      height: 38px;
+    }
+
+    .NavBar-right>a>img,
+    .NavBar-right img {
+      width: 38px;
+      height: 38px;
+      border-radius: 30px;
+    }
+
+    .NavBar-right>i {
+      margin-top: 5px;
+      color: whitesmoke;
+    }
+
+    .NavBar-right>li>a>i {
+      margin-bottom: 5px;
+      color: whitesmoke;
+    }
+
+    .NavBar-right>i:hover {
+      color: rgb(255, 52, 52);
+      cursor: pointer;
+    }
+
+    .chat {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat li {
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px dotted #B3A9A9;
+    }
+
+    .chat li.left .chat-body {
+      margin-left: 60px;
+    }
+
+    .chat li.right .chat-body {
+      margin-right: 60px;
+    }
+
+
+    .chat li .chat-body p {
+      margin: 0;
+      color: #777777;
+    }
+
+    .panel .slidedown .glyphicon,
+    .chat .glyphicon {
+      margin-right: 5px;
+    }
+
+    .panel-body {
+      overflow-y: scroll;
+      height: 85%;
+    }
+
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar {
+      width: 12px;
+      background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+      background-color: #555;
+    }
+
+      {
+      % block style %
+    }
+
+      {
+      % endblock %
+    }
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar">
+    <!-- Navbar content -->
+    <div class="NavBar-left row">
+      <div class="toggle-btn mx-4" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-    </div>
-    {% else %}
-​
-    <div class="carousel-item">
-      <div class="bg_image" style="background-image: linear-gradient(90deg, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 100%),url('https://image.tmdb.org/t/p/original{{recommend.backdrop_path}}');
-    background-repeat: no-repeat;
-    background-size: 100%;
-    ">
-        <div class="recommend_word container row">
-          <h1 style="display:block; color: white; background: rgba(0,0,0,0.5); margin-left: 75px;">SW에서 {{ user.username }}님만을 위해 추천해드려요</h1><br>
-          <a href="{% url 'movies:detail' recommend.pk %}" type="button" class="btn btn-light">보러가기</a>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-    {% endfor %}
-  </div>
-  <a class="carousel-control-prev" href="#recommendmovie" role="button" data-slide="prev" style="background: linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%, rgba(255,255,255,0.2) 100%); margin-left: 75px;">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#recommendmovie" role="button" data-slide="next" style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 100%, rgba(255,255,255,0.2) 100%);">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-<div class="main">
-    <div id="popularmovie" class="carousel slide movielist" data-ride="carousel">
-        <h2>인기순</h2>
-        <!-- The slideshow -->
-        <div class="carousel-inner no-padding">
-          <a class="carousel-control-prev no-padding" href="#popularmovie" data-slide="prev"
-            style="background: linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%, rgba(255,255,255,0.2) 100%);">
-            <span class="carousel-control-prev-icon"></span>
-          </a>
-          <div class="carousel-item active">
-            <div class="row">
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.0.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.0.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.0.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.1.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.1.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.1.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.2.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.2.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.2.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.3.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.3.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.3.title}}</h5>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="row">
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.4.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.4.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.4.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.5.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.5.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.5.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.6.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.6.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.6.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.7.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.7.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.7.title}}</h5>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="row carousel-item">
-            <div class="row">
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.8.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.8.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.8.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.9.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.9.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.9.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.10.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.10.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.10.title}}</h5>
-                </a>
-              </div>
-              <div class="col-3">
-                <a href="{% url 'movies:detail' populars.11.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.11.backdrop_path}}" class='my-image' alt=""><br>
-                  <h5 class="movieTitle">{{populars.11.title}}</h5>
-                </a>
-              </div>
-            </div>
-          </div>
-          <a class="carousel-control-next no-padding" href="#popularmovie" data-slide="next"
-            style="background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 100%, rgba(255,255,255,0.2) 100%);">
-            <span class="carousel-control-next-icon"></span>
-          </a>
-        </div>
-        <!-- Left and right controls -->
-      </div>
-  <div id="demo" class="carousel slide movielist" data-ride="carousel">
-    <h2>평점 높은 영화</h2>
-    <!-- The slideshow -->
-    <div class="carousel-inner no-padding">
-      <a class="carousel-control-prev no-padding" href="#demo" data-slide="prev"
-        style="background: linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%, rgba(255,255,255,0.2) 100%);">
-        <span class="carousel-control-prev-icon"></span>
+      <a href="{% url 'movies:index' %}">
+        <img src="{% static 'movies/images/로고0.png' %}" alt="navbar_logo" style="height:38px;">
       </a>
-      <div class="carousel-item active">
-        <div class="row">
-          <div class="col-3">
-            <a href="{% url 'movies:detail' movies.0.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.0.backdrop_path}}" class='my-image' alt=""><br>
-              <h5 class="movieTitle">{{movies.0.title}}</h5>
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="{% url 'movies:detail' movies.1.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.1.backdrop_path}}" class='my-image' alt=""><br>
-              <h5 class="movieTitle">{{movies.1.title}}</h5>
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="{% url 'movies:detail' movies.2.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.2.backdrop_path}}" class='my-image' alt=""><br>
-              <h5 class="movieTitle">{{movies.2.title}}</h5>
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="{% url 'movies:detail' movies.3.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.3.backdrop_path}}" class='my-image' alt=""><br>
-              <h5 class="movieTitle">{{movies.3.title}}</h5>
-            </a>
+      <form action="{% url 'movies:search' %}" class="form-inline mx-4" method="get">
+        <input class="form-control mr-sm-2" type="search" placeholder="영화 검색하기" aria-label="Search" name="search">
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+    <div class="NavBar-right row mr-3">
+      <!-- <a style="display: inline;"> -->
+      <i class="far fa-comment-dots fa-2x" onclick="toggleSidebarRight()"></i>
+      <!-- </a> -->
+      <li class="nav-item dropdown" style="display: inline;">
+        <a class="nav-link dropdown-toggle pt-1" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+          aria-expanded="false">
+          {% if user.image %}
+          <img src="{{ user.image.url }}" alt="{{ user.image.name }}">
+          {% else %}
+          <i class="fas fa-user-circle fa-2x"></i>
+          {% endif %}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" style="z-index:1000;">
+          <a class="dropdown-item disabled" href="#" aria-disabled="true">{{ user.username }}</a>
+          <a class="dropdown-item" href="{% url 'accounts:detail' user.pk %}">내 프로필</a>
+          <a class="dropdown-item" href="{% url 'accounts:update' %}">내정보 수정</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a>
+        </div>
+      </li>
+
+    </div>
+  </nav>
+  <div class="container">
+    <div id="sidebar_fixed">
+      <ul>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-home"></i>
+          </li>
+        </a>
+        <a href="{% url 'movies:like_movies' %}">
+          <li class="able">
+            <i class="fas fa-thumbs-up"></i>
+          </li>
+        </a>
+        <a href="{% url 'movies:wishs' user.pk %}">
+          <li class="able">
+            <i class="fas fa-heart"></i>
+          </li>
+        </a>
+      </ul>
+    </div>
+    <div id="sidebar">
+      <ul>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-home"> Home</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:like_movies' %}">
+          <li class="able">
+            <i class="fas fa-thumbs-up"> 좋아요</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:wishs' user.pk %}">
+          <li class="able">
+            <i class="fas fa-heart"> 같이 볼래요</i>
+          </li>
+        </a>
+      </ul>
+      <ul>
+        <li>
+          팔로우
+        </li>
+        <!-- <li for 문></li> -->
+        {% for following in user.followings.all %}
+        <a href="{% url 'accounts:detail' following.pk %}">
+          <li class="able">
+            {% if following.image %}
+            <img src="{{ following.image.url }}" alt="{{ following.image.name }}"> {{ following.username }}
+            {% else %}
+            <i class="fas fa-user-circle fa-2x"></i> following.username
+            {% endif %}
+          </li>
+        </a>
+        {% endfor %}
+      </ul>
+      <ul>
+        <li class="able" onclick="toggleSidebar2()">더보기 <i class="fas fa-chevron-right"></i></li>
+      </ul>
+      @copyright
+    </div>
+    <div id="sidebar2">
+      <ul>
+        <a href="{% url 'movies:index' %}">
+          <li class="able">
+            <i class="fas fa-star"> 인기순</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:top_movie' %}">
+          <li class="able">
+            <i class="fas fa-trophy"> 평점순</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:now_playing' %}">
+          <li class="able">
+            <i class="fas fa-video"> 상영중</i>
+          </li>
+        </a>
+        <a href="{% url 'movies:up_coming' %}">
+          <li class="able">
+            <i class="far fa-hand-point-right"> 개봉예정</i>
+          </li>
+        </a>
+      </ul>
+      <ul>
+        <li class="able" onclick="toggleSidebar2()">닫기 <i class="fas fa-chevron-left"></i></li>
+      </ul>
+    </div>
+    <div class="" id="app">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-primary" style="height:100%; width:100%;">
+            <div class="panel-heading">
+              <span class="glyphicon glyphicon-comment"></span> Chat
+
+            </div>
+            <div class="panel-body">
+              <ul class="chat" id="chat">
+                <li class="left clearfix" v-for="data in conversations">
+                  <div class="container">
+                    <div class="row">
+                      <div class="chat-img pull-left col-3" style="display: inline;">
+                        <img :src="data.profile" alt="User Avatar"
+                          style="height: 50px; width: 50px; object-fit: cover; border-radius: 50%;"
+                          class="img-circle" />
+
+                      </div>
+                      <div class="chat-body clearfix col-9">
+                        <div class="header">
+                          <strong class="primary-font" v-html="data.name"> </strong> <small
+                            class="pull-right text-muted" v-html="data.status"></small>
+                        </div>
+                        <p v-html="data.message">
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="panel-footer">
+              <div class="input-group">
+                <input id="btn-input" v-model="message" class="form-control input-sm"
+                  placeholder="Type your message here..." type="text">
+                <span class="input-group-btn">
+                  <button class="btn btn-warning btn-sm" id="btn-chat" @click="sendMessage()">
+                    Send</button>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="carousel-item"&g...
+    </div>
+  </div>
+  </div>
+  {% block body %}
+  {% endblock  %}
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle('active');
+    }
+
+    function toggleSidebar2() {
+      document.getElementById("sidebar2").classList.toggle('active');
+    }
+
+    function toggleSidebarRight() {
+      document.getElementById("app").classList.toggle('active');
+    }
+
+    var pusher = new Pusher('37ab78bd0a8268dc6f28', {
+      cluster: 'ap3'
+    });
+    var socketId = null;
+    pusher.connection.bind('connected', function () {
+      socketId = pusher.connection.socket_id;
+
+    });
+
+    var my_channel = pusher.subscribe('a_channel');
+    var config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    };
+    new Vue({
+      el: "#app",
+      data: {
+        'profile': '',
+        'message': '',
+        'conversations': []
+      },
+      mounted() {
+        this.getConversations();
+        this.listen();
+      },
+      methods: {
+        sendMessage() {
+          axios.post('/conversation', this.queryParams({
+              message: this.message,
+            }), config)
+            .then(response => {
+              console.log(response)
+              this.message = '';
+            });
+        },
+        getConversations() {
+          axios.get('/conversations').then((response) => {
+            this.conversations = response.data;
+            this.readall();
+          });
+        },
+        listen() {
+          my_channel.bind("an_event", (data) => {
+            this.conversations.push(data);
+            axios.post('/conversations/' + data.id + '/delivered', this.queryParams({
+              socket_id: socketId
+            }));
+          })
+
+          my_channel.bind("delivered_message", (data) => {
+            for (var i = 0; i < this.conversations.length; i++) {
+              if (this.conversations[i].id == data.id) {
+                this.conversations[i].status = data.status;
+              }
+            }
+
+          })
+        },
+        readall() {
+
+          for (var i = 0; i < this.conversations.length; i++) {
+            if (this.conversations[i].status == 'Sent') {
+              axios.post('/conversations/' + this.conversations[i].id + '/delivered');
+            }
+          }
+
+        },
+        queryParams(source) {
+          var array = [];
+
+          for (var key in source) {
+            array.push(encodeURIComponent(key) + "=" + encodeURIComponent(source[key]));
+          }
+
+          return array.join("&");
+        }
+      },
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
