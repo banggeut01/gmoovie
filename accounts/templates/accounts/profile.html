@@ -23,7 +23,9 @@
 
   .follower img, 
   .following img {
-    
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
   }
 </style>
 {% endblock %}
@@ -80,12 +82,13 @@
   <div class="row follower">
     {% for follower in account.followers.all %}
     <a href="{% url 'accounts:detail' follower.pk %}">
-      <div class="col-2">
+      <div class="m-3">
         {% if follower.image %}
         <img src="{{ follower.image.url }}" alt="{{ follower.image.name }}">
         {% else %}
-        <i class="fas fa-user-circle fa-9x"></i>
+        <i class="fas fa-user-circle fa-5x"></i>
         {% endif %}
+        <p>{{ follower.username }}</p>
       </div>
     </a>
     {% endfor %}
@@ -93,13 +96,14 @@
   <h4 style="color:gray;" class="my-3">팔로우 {{ account.followings.all.count }}</h4>
   <div class="row following">
     {% for following in account.followings.all %}
-    <a href="{% url 'accounts:detail' following.pk %}"></a>
-    <div class="col-2">
+    <a href="{% url 'accounts:detail' following.pk %}">
+    <div class="m-3">
       {% if following.image %}
       <img src="{{ following.image.url }}" alt="{{ following.image.name }}">
       {% else %}
-      <i class="fas fa-user-circle fa-9x"></i>
+      <i class="fas fa-user-circle fa-5x"></i>
       {% endif %}
+      <p>{{ following.username }}</p>
     </div>
     </a>
     {% endfor %}

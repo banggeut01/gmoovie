@@ -31,7 +31,8 @@ def index(request):
         return render(request,'movies/index.html',context)
     else:
         return redirect('accounts:login')
-        
+
+@login_required        
 def detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     review_form = ReviewForm()
@@ -86,3 +87,18 @@ def like(request,movie_pk):
         return redirect('movies:detail', movie_pk)
     else:
         return redirect('accounts:login')
+
+@login_required
+def like_movies(request):
+    movies = request.user.like_movies.all()
+    context = {
+        'movies': movies,
+    }
+    return render(request, 'movies/like_movies.html', context)
+
+@login_required
+def wish(request,movie_pk):
+    if request.method == 'POST':
+        pass
+    else: # get
+        return render(request, 'movies/wishForm.html')

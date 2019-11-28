@@ -45,6 +45,11 @@
 {% endblock %}
 
 {% block body %}
+{% for i in nowplaying %}
+{% if forloop.first %}
+  <h1>{{ forloop.counter0 }}</h1>
+{% endif %}
+{% endfor %}
 <div id="demo" class="carousel slide" data-ride="carousel" style="z-index: -100;">
   <h2>평점순 영화 목록</h2>
   <!-- The slideshow -->

@@ -275,9 +275,11 @@
             <i class="fas fa-home"></i>
           </li>
         </a>
-        <li class="able">
-          <i class="fas fa-thumbs-up"></i>
-        </li>
+        <a href="{% url 'movies:like_movies' %}">
+          <li class="able">
+            <i class="fas fa-thumbs-up"></i>
+          </li>
+        </a>
         <li class="able">
           <i class="fas fa-heart"></i>
         </li>
@@ -289,7 +291,7 @@
           <li class="able">
             <i class="fas fa-home"> Home</i>
           </li>
-        </a>
+        </a href="{% url 'movies:like_movies' %}">
         <li class="able">
           <i class="fas fa-thumbs-up"> 좋아요</i>
         </li>

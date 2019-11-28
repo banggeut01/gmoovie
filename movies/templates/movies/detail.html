@@ -122,7 +122,7 @@
           </a>
           {% endif %}
           {% if is_now or is_up %}
-          <a href="" title="같이 볼래요"><i class="fas fa-heart fa-3x"></i></a>
+          <a href="{% url 'movies:wish' movie.id %}" title="같이 볼래요"><i class="fas fa-heart fa-3x"></i></a>
           {% endif %}
           <!-- trigger modal -->
           <a href="" title="광고 보러가기" data-toggle="modal" data-target="#videoModal"><i

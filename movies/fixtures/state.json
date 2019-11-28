@@ -1,0 +1,65 @@
+[
+	{
+		"pk": "1",
+		"model": "movies.State",
+		"fields": {
+			"state": "\uc11c\uc6b8"
+		}
+	},
+	{
+		"pk": "2",
+		"model": "movies.State",
+		"fields": {
+			"state": "\uacbd\uae30"
+		}
+	},
+	{
+		"pk": "3",
+		"model": "movies.State",
+		"fields": {
+			"state": "\uc778\ucc9c"
+		}
+	},
+	{
+		"pk": "4",
+		"model": "movies.State",
+		"fields": {
+			"state": "\uac15\uc6d0"
+		}
+	},
+	{
+		"pk": "5",
+		"model": "movies.State",
+		"fields": {
+			"state": "\ub300\uc804/\ucda9\uccad"
+		}
+	},
+	{
+		"pk": "6",
+		"model": "movies.State",
+		"fields": {
+			"state": "\ub300\uad6c"
+		}
+	},
+	{
+		"pk": "7",
+		"model": "movies.State",
+		"fields": {
+			"state": "\ubd80\uc0b0/\uc6b8\uc0b0"
+		}
+	},
+	{
+		"pk": "8",
+		"model": "movies.State",
+		"fields": {
+			"state": "\uacbd\uc0c1"
+		}
+	},
+	{
+		"pk": "9",
+		"model": "movies.State",
+		"fields": {
+			"state": "\uad11\uc8fc/\uc804\ub77c/\uc81c\uc8fc"
+		}
+	}
+]
