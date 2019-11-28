@@ -198,7 +198,7 @@ def now_playing(request):
         'now_playing': results,
     }
     return render(request,'movies/search.html', context)
-    
+
 def up_coming(request):
     results = []
     movies = Movie.objects.all()
@@ -209,3 +209,14 @@ def up_coming(request):
         'up_coming': results,
     }
     return render(request,'movies/search.html', context)
+
+def people_movies(request, people_pk):
+    people = get_object_or_404(People, pk=people_pk)
+    movies = people.known_for.all()
+    if len(movies) > 20: 
+        movies = movies[:20]
+    context = {
+        'movies': movies,
+        'people': people,
+    }
+    return render(request, 'movies/people.html', context)

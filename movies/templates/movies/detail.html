@@ -183,10 +183,12 @@
           <br>
           <div class="row" id="cast">
             {% for people in peoples %}
-            <div class="col-3">
-              <img src="https://image.tmdb.org/t/p/w500{{ people.profile_path }}" alt="{{ people.name }}">
-              <p>{{ people.name }}</p>
-            </div>
+            <a href="{% url 'movies:people_movies' people.id %}">
+              <div class="col-3">
+                <img src="https://image.tmdb.org/t/p/w500{{ people.profile_path }}" alt="{{ people.name }}">
+                <p style="width:100px; text-align: center;">{{ people.name }}</p>
+              </div>
+            </a>
             {% endfor %}
           </div>
         </td>
