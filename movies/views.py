@@ -22,7 +22,7 @@ def index(request):
                     if rec_movie not in like_movies and rec_movie not in recommend:
                         recommend.append(rec_movie)
                         break
-        popular_idx = [429617, 330457, 480042, 475557, 453075, 466272, 420818, 290859, 474350, 423204, 453405, 283995, 384018]
+        popular_idx = [19404, 330457, 13398, 475557, 484468, 466282, 420809, 290859, 238628, 423204, 453405, 527641]
         for popular in popular_idx:
             for movie in movies:
                 if popular == int(movie.pk):
