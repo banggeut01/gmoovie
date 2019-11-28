@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import ReviewForm
-from .models import Movie, Review, People, State, Wish
+from .models import Movie, Review, People, State, Wish, Genre
 
 def index(request):
     if request.user.is_authenticated:
@@ -149,7 +149,7 @@ def search(request):
     movies = Movie.objects.all()
     peoples = People.objects.all()
     word = request.GET.get('search')
-    if word.is_valid():
+    if len(word) > 0:
         result_genres = []
         result_movies = []
         result_peoples = []
