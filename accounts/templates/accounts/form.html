@@ -37,6 +37,11 @@
   #formdiv>form {
     margin-top: 20px;
   }
+
+  #formbtn,
+  #formbtn2 {
+    margin-bottom: 20px;
+  }
 </style>
 {% endblock %}
 
@@ -63,9 +68,9 @@
       {% csrf_token %}
       {{ form.as_p }}
       {% if user.is_authenticated %}
-      <input class="btn btn-secondary" type="submit" value="수정">
+      <input class="btn btn-secondary" id="formbtn" type="submit" value="수정">
       {% else %}
-      <input class="btn btn-secondary" type="submit" value="회원가입">
+      <input class="btn btn-secondary" id="formbtn2" type="submit" value="회원가입">
       {% endif %}
     </form>
   </div>
