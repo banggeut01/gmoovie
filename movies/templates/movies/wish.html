@@ -90,6 +90,10 @@
     border: 0;
     background-color: rgba(255, 255, 255, 0);
   }
+
+  #cast_element {
+    margin: 20px 20px 20px 20px;
+  }
 </style>
 {% endblock %}
 
@@ -112,11 +116,10 @@
         </td>
         <td id="contentSection">
           <h1>{{ wish.movie.title }} ({{ wish.state.state }}) </h1>
-
           <div class="row" id="cast">
             {% for wish_user in wish.movie.wish_users.all %}
             {% if wish_user != user%}
-            <div>
+            <div id="cast_element">
               <a href="{% url 'accounts:detail' wish_user.pk %}">
                 {% if wish_user.image %}
                 <img class="profile" src="{{ wish_user.image.url }}" alt="{{ wish_user.image.name }}">
@@ -130,7 +133,11 @@
                   {% else %}
                   <i class="fas fa-venus"></i>
                   {% endif %}<br>
-                  {{ wish.state.state }}
+                  {% for w in wish_user.wish_set.all %}
+                  {% if w.movie == wish.movie %}
+                  {{ w.state.state }}
+                  {% endif %}
+                  {% endfor %}
                 </p>
               </a>
             </div>

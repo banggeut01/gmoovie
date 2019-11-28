@@ -68,7 +68,8 @@
   ">
         <div class="recommend_word container row">
           <h1 style="display:block; color: white; background: rgba(0,0,0,0.5); margin-left: 75px;">SW에서 {{ user.username }}님만을 위해 추천해드려요</h1>
-          <a href="{% url 'movies:detail' recommend.pk %}"><button type="button" class="btn btn-light">보러가기</button></a>
+          &nbsp&nbsp&nbsp&nbsp
+          <a href="{% url 'movies:detail' recommend.pk %}"><button type="button" class="btn btn-light mt-1" style="opacity: 0.8; font-family: 'Song Myung', serif;border=0;">보러가기</button></a>
         </div>
       </div>
     </div>
@@ -80,8 +81,8 @@
     background-size: 100%;
     ">
         <div class="recommend_word container row">
-          <h1 style="display:block; color: white; background: rgba(0,0,0,0.5); margin-left: 75px;">SW에서 {{ user.username }}님만을 위해 추천해드려요</h1><br>
-          <a href="{% url 'movies:detail' recommend.pk %}" type="button" class="btn btn-light">보러가기</a>
+          <h1 style="display:block; color: white; background: rgba(0,0,0,0.5); margin-left: 75px;">SW에서 {{ user.username }}님만을 위해 추천해드려요</h1><br>&nbsp&nbsp&nbsp&nbsp
+          <a href="{% url 'movies:detail' recommend.pk %}"><button type="button" class="btn btn-light mt-1" style="opacity: 0.8; font-family: 'Song Myung', serif;border=0;">보러가기</button></a>
         </div>
       </div>
     </div>
@@ -110,25 +111,25 @@
             <div class="row">
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.0.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.0.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.0.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.0.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.1.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.1.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.1.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.1.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.2.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.2.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.2.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.2.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.3.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.3.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.3.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.3.title}}</h5>
                 </a>
               </div>
@@ -138,25 +139,25 @@
             <div class="row">
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.4.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.4.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.4.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.4.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.5.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.5.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.5.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.5.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.6.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.6.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.6.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.6.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.7.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.7.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.7.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.7.title}}</h5>
                 </a>
               </div>
@@ -166,25 +167,25 @@
             <div class="row">
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.8.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.8.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.8.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.8.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.9.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.9.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.9.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.9.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.10.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.10.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.10.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.10.title}}</h5>
                 </a>
               </div>
               <div class="col-3">
                 <a href="{% url 'movies:detail' populars.11.pk %}"><img
-                    src="https://image.tmdb.org/t/p/w500/{{populars.11.backdrop_path}}" class='my-image' alt=""><br>
+                    src="https://image.tmdb.org/t/p/w500/{{populars.11.backdrop_path}}" class='my-image shadow' alt=""><br>
                   <h5 class="movieTitle">{{populars.11.title}}</h5>
                 </a>
               </div>
@@ -209,25 +210,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.0.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.0.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.0.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.0.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.1.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.1.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.1.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.1.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.2.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.2.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.2.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.2.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.3.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.3.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.3.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.3.title}}</h5>
             </a>
           </div>
@@ -237,25 +238,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.4.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.4.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.4.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.4.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.5.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.5.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.5.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.5.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.6.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.6.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.6.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.6.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.7.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.7.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.7.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.7.title}}</h5>
             </a>
           </div>
@@ -265,25 +266,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.8.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.8.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.8.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.8.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.9.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.9.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.9.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.9.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.10.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.10.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.10.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.10.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' movies.11.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{movies.11.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{movies.11.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{movies.11.title}}</h5>
             </a>
           </div>
@@ -308,25 +309,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.0.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.0.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.0.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.0.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.1.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.1.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.1.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.1.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.2.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.2.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.2.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.2.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.3.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.3.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.3.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.3.title}}</h5>
             </a>
           </div>
@@ -336,25 +337,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.4.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.4.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.4.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.4.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.5.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.5.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.5.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.5.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.6.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.6.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.6.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.6.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.7.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.7.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.7.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.7.title}}</h5>
             </a>
           </div>
@@ -364,25 +365,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.8.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.8.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.8.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.8.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.9.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.9.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.9.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.9.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.10.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.10.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.10.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.10.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' nowplaying.11.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{nowplaying.11.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{nowplaying.11.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{nowplaying.11.title}}</h5>
             </a>
           </div>
@@ -407,25 +408,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.0.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.0.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.0.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.0.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.1.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.1.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.1.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.1.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.2.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.2.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.2.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.2.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.3.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.3.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.3.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.3.title}}</h5>
             </a>
           </div>
@@ -435,25 +436,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.4.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.4.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.4.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.4.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.5.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.5.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.5.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.5.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.6.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.6.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.6.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.6.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.7.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.7.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.7.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.7.title}}</h5>
             </a>
           </div>
@@ -463,25 +464,25 @@
         <div class="row">
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.8.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.8.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.8.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.8.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.9.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.9.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.9.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.9.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.10.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.10.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.10.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.10.title}}</h5>
             </a>
           </div>
           <div class="col-3">
             <a href="{% url 'movies:detail' upcoming.11.pk %}"><img
-                src="https://image.tmdb.org/t/p/w500/{{upcoming.11.backdrop_path}}" class='my-image' alt=""><br>
+                src="https://image.tmdb.org/t/p/w500/{{upcoming.11.backdrop_path}}" class='my-image shadow' alt=""><br>
               <h5 class="movieTitle">{{upcoming.11.title}}</h5>
             </a>
           </div>
